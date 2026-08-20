@@ -23,7 +23,7 @@ node -e "
   fs.writeFileSync(p, JSON.stringify(pkg, null, 2) + '\n');
 "
 git add projects/assay-ui/package.json
-git commit -m "assay-ui v${VERSION}"
+git diff --cached --quiet || git commit -m "assay-ui v${VERSION}"
 
 echo "==> Building assay-ui"
 npx --no-install ng build assay-ui
@@ -37,7 +37,7 @@ trap 'git worktree remove "$WORKTREE" --force 2>/dev/null; rm -rf "$WORKTREE"' E
 if git show-ref --verify --quiet refs/remotes/origin/dist; then
   git worktree add -B dist "$WORKTREE" origin/dist
 else
-  git worktree add --orphan -b dist "$WORKTREE" main
+  git worktree add --orphan -b dist "$WORKTREE"
 fi
 
 rm -rf "${WORKTREE:?}"/*
