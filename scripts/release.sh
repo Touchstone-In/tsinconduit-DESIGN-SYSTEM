@@ -50,4 +50,5 @@ git push origin main
 git push origin "$REF"
 
 echo "==> Done. Consumers install:"
-echo "    \"assay-ui\": \"github:Touchstone-In/tsinconduit-design-system#${REF}\""
+echo "    \"assay-ui\": \"git+https://github.com/Touchstone-In/tsinconduit-design-system.git#${REF}\""
+echo "    (then patch package-lock.json's resolved URL to https — see README.md's CI note)"

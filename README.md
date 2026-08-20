@@ -28,14 +28,45 @@ hand-ports away.
 ## Installing in a service
 
 No private npm registry is involved — this ships as a **git-tag
-dependency**, installed straight from this repo:
+dependency**, installed straight from this repo (now public, so no
+credentials are needed to fetch it):
 
 ```jsonc
 // package.json
 "dependencies": {
-  "assay-ui": "github:Touchstone-In/tsinconduit-design-system#assay-ui-v0.1.0"
+  "assay-ui": "git+https://github.com/Touchstone-In/tsinconduit-design-system.git#assay-ui-v0.1.0"
 }
 ```
+
+> **CI note — read this before running a bare `npm install`/`bun install`
+> against a service that depends on `assay-ui`.** npm always resolves a
+> GitHub-hosted git dependency's `package-lock.json` `"resolved"` field to
+> an `ssh://` URL internally, no matter what URL form the `package.json`
+> spec above uses — and GitHub Actions runners have no SSH key for
+> cross-repo access, only the checkout's own scoped HTTPS token, so `npm
+> ci` fails with `Permission denied (publickey)`. After installing or
+> bumping the `assay-ui` version, patch the lockfile's resolved URL back
+> to `https` (this makes npm fetch a plain tarball from
+> `codeload.github.com` — no git binary or SSH needed at all):
+>
+> ```bash
+> # from the service's frontend directory, after npm install / npm update
+> node -e '
+>   const fs = require("fs");
+>   const p = "package-lock.json";
+>   const data = JSON.parse(fs.readFileSync(p, "utf8"));
+>   const node = data.packages["node_modules/assay-ui"];
+>   node.resolved = node.resolved.replace("git+ssh://git@github.com/", "git+https://github.com/");
+>   fs.writeFileSync(p, JSON.stringify(data, null, 2) + "\n");
+> '
+> rm -rf node_modules && npm ci   # verify it installs clean, no SSH involved
+> ```
+>
+> `bun install` does not have this problem — bun resolves GitHub-hosted
+> git deps via the `api.github.com` tarball endpoint natively, never SSH.
+> (If `bun install` fails with "Integrity check failed", that's a stale
+> pinned hash in `bun.lock` from an earlier state, unrelated to this —
+> just delete `bun.lock` and reinstall to regenerate it.)
 
 Then wire the CSS toolkit into `angular.json`'s `styles` array, after
 your own service's stylesheet (loading order matters — Assay's classes
