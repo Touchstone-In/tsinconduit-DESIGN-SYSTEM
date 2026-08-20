@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Assay — Foundations</title>
+<link rel="stylesheet" href="../../projects/assay-ui/styles/tokens.css">
+<link rel="stylesheet" href="../../projects/assay-ui/styles/toolkit.css">
+<style>
+  body { padding: var(--space-7); overflow: auto; }
+  .board { max-width: 1180px; margin: 0 auto; display: flex; flex-direction: column; gap: var(--space-6); }
+  .swatches { display: grid; grid-template-columns: repeat(6, 1fr); gap: var(--space-3); }
+  .swatch { border-radius: var(--a-radius-input); border: 1px solid var(--a-border-subtle); overflow: hidden; }
+  .swatch__chip { height: 64px; }
+  .swatch__meta { padding: var(--space-2) var(--space-3); background: var(--a-surface); }
+  .swatch__name { font: var(--a-type-caption); color: var(--a-ink); font-weight: 600; }
+  .swatch__hex { font: var(--a-type-caption); color: var(--a-ink-muted); }
+  .type-row { display: grid; grid-template-columns: 160px 1fr; align-items: baseline; gap: var(--space-4); padding: var(--space-3) 0; border-bottom: 1px solid var(--a-border-subtle); }
+  .type-row:last-child { border-bottom: 0; }
+</style>
+</head>
+<body>
+<div class="board">
+
+  <header>
+    <div class="a-overline">Assay · the Conduit design language</div>
+    <h1 class="a-display" style="margin-top:8px">One suite. One surface. One current.</h1>
+    <span class="a-current-bar" style="width:96px; height:4px; margin-top:16px"></span>
+    <p class="a-body a-mt-4" style="max-width:640px">
+      Calm white surfaces, a single confident teal, IBM&nbsp;Plex&nbsp;Sans, and Material
+      Symbols — carried across every Touchstone Conduit service from sign-in to sign-out.
+    </p>
+  </header>
+
+  <section class="a-card a-card--flat">
+    <h2 class="a-heading a-mb-4">Colour</h2>
+    <div class="swatches">
+      <div class="swatch"><div class="swatch__chip" style="background:#0281A0"></div><div class="swatch__meta"><div class="swatch__name">Brand teal</div><div class="swatch__hex">#0281A0</div></div></div>
+      <div class="swatch"><div class="swatch__chip" style="background:#016480"></div><div class="swatch__meta"><div class="swatch__name">Action teal</div><div class="swatch__hex">#016480</div></div></div>
+      <div class="swatch"><div class="swatch__chip" style="background:#CAE8EF"></div><div class="swatch__meta"><div class="swatch__name">Teal container</div><div class="swatch__hex">#CAE8EF</div></div></div>
+      <div class="swatch"><div class="swatch__chip" style="background:#0C2B36"></div><div class="swatch__meta"><div class="swatch__name">Ink</div><div class="swatch__hex">#0C2B36</div></div></div>
+      <div class="swatch"><div class="swatch__chip" style="background:#0C2233"></div><div class="swatch__meta"><div class="swatch__name">Rail navy</div><div class="swatch__hex">#0C2233</div></div></div>
+      <div class="swatch"><div class="swatch__chip" style="background:#93C13E"></div><div class="swatch__meta"><div class="swatch__name">Conduit green</div><div class="swatch__hex">#93C13E</div></div></div>
+    </div>
+    <div class="a-mt-4">
+      <div class="a-caption a-mb-4" style="margin-bottom:8px">The Current — signature gradient drawn from the CONDUIT pulse line</div>
+      <div style="height:12px;border-radius:6px;background:var(--a-current)"></div>
+    </div>
+  </section>
+
+  <div class="a-grid a-grid--2">
+    <section class="a-card a-card--flat">
+      <h2 class="a-heading a-mb-4">Type — IBM Plex Sans</h2>
+      <div class="type-row"><span class="a-caption">Display · 32/40 · 600</span><span class="a-display">Assessment ready</span></div>
+      <div class="type-row"><span class="a-caption">Title · 24/32 · 600</span><span class="a-title">Assessment ready</span></div>
+      <div class="type-row"><span class="a-caption">Heading · 20/28 · 600</span><span class="a-heading">Assessment ready</span></div>
+      <div class="type-row"><span class="a-caption">Body · 15/24 · 400</span><span class="a-body">Candidates complete their language benchmark before scheduling.</span></div>
+      <div class="type-row"><span class="a-caption">Caption · 12.5/16 · 500</span><span class="a-caption">Updated 4 minutes ago</span></div>
+      <div class="type-row"><span class="a-caption">Overline · 11/16 · 600</span><span class="a-overline">Clinical assessment</span></div>
+    </section>
+
+    <section class="a-card a-card--flat">
+      <h2 class="a-heading a-mb-4">Components</h2>
+      <div class="a-stack" style="gap:var(--space-4)">
+        <div class="a-row">
+          <button class="a-btn a-btn--filled"><span class="a-icon">check</span>Primary</button>
+          <button class="a-btn a-btn--tonal">Tonal</button>
+          <button class="a-btn a-btn--outlined">Outlined</button>
+          <button class="a-btn a-btn--ghost">Ghost</button>
+        </div>
+        <div class="a-row">
+          <span class="a-badge a-badge--success">Confirmed</span>
+          <span class="a-badge a-badge--warning">Pending review</span>
+          <span class="a-badge a-badge--error">Action needed</span>
+          <span class="a-badge a-badge--info">In progress</span>
+          <span class="a-badge a-badge--neutral">Draft</span>
+        </div>
+        <div class="a-row">
+          <span class="a-chip"><span class="a-icon">filter_list</span>All programs</span>
+          <span class="a-chip a-chip--selected"><span class="a-icon">check</span>2026 cohort</span>
+          <span class="a-chip">Toronto</span>
+        </div>
+        <label class="a-field">
+          <span class="a-field__label">Candidate email</span>
+          <span class="a-input"><span class="a-icon">mail</span><input type="email" placeholder="name@tsin.ca"></span>
+          <span class="a-field__hint">We only use this for exam-day communication.</span>
+        </label>
+        <div>
+          <div class="a-row a-row--between" style="margin-bottom:6px">
+            <span class="a-caption">Station 6 of 10</span><span class="a-caption">60%</span>
+          </div>
+          <div class="a-progress"><span class="a-progress__fill" style="width:60%"></span></div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+</div>
+</body>
+</html>

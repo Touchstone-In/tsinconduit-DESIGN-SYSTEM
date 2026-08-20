@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Conduit SSO — Sign in</title>
+<link rel="stylesheet" href="../../projects/assay-ui/styles/tokens.css">
+<link rel="stylesheet" href="../../projects/assay-ui/styles/toolkit.css">
+<style>
+  .brand-word { font: 600 2.25rem/1 var(--a-font); letter-spacing: 0.22em; color: #fff; }
+  .brand-sub  { font: var(--a-type-caption); letter-spacing: 0.18em; text-transform: uppercase; color: #C9DAE4; margin-top: 10px; }
+  .app-hints { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-3); max-width: 420px; }
+  .app-hint {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 14px; border-radius: var(--a-radius-input);
+    background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.10);
+    color: #DCEAF2; font: var(--a-type-caption);
+  }
+  .app-hint .a-icon { font-size: 18px; color: #6FCBDF; }
+  .social { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); }
+  .divider-label { display: flex; align-items: center; gap: var(--space-3); color: var(--a-ink-muted); font: var(--a-type-caption); }
+  .divider-label::before, .divider-label::after { content: ''; flex: 1; border-top: 1px solid var(--a-border-subtle); }
+</style>
+<script src="shell.js"></script>
+</head>
+<body>
+<div class="a-auth">
+
+  <aside class="a-auth__brand">
+    <div>
+      <img src="../../projects/assay-ui/styles/brand/conduit-logo-white.png" alt="CONDUIT by Touchstone Institute"
+           style="width:320px;max-width:100%;height:auto">
+    </div>
+    <div>
+      <h1 style="font:var(--a-type-title);color:#fff;max-width:420px">
+        One sign-in for every Touchstone service.
+      </h1>
+      <p style="font:var(--a-type-body);color:#C9DAE4;margin-top:12px;max-width:420px">
+        Assessments, learning, meetings, mail and more — connected through a
+        single secure account.
+      </p>
+      <div class="app-hints" style="margin-top:24px">
+        <span class="app-hint"><span class="a-icon">school</span>Campus</span>
+        <span class="app-hint"><span class="a-icon">quiz</span>Exams</span>
+        <span class="app-hint"><span class="a-icon">videocam</span>Connect</span>
+        <span class="app-hint"><span class="a-icon">mail</span>Mail</span>
+        <span class="app-hint"><span class="a-icon">monitoring</span>Insights</span>
+        <span class="app-hint"><span class="a-icon">apps</span>+ 8 more</span>
+      </div>
+    </div>
+    <div style="font:var(--a-type-caption);color:#8AA5B5">
+      © 2026 Touchstone Institute · Privacy · Accessibility · Français
+    </div>
+  </aside>
+
+  <main class="a-auth__panel">
+    <div class="a-auth__card">
+      <div class="a-overline">Conduit single sign-on</div>
+      <h2 class="a-title" style="margin-top:8px">Sign in</h2>
+      <p class="a-body-sm a-mt-2" style="color:var(--a-ink-muted)">
+        Continue to <strong style="color:var(--a-ink)">Campus</strong>
+      </p>
+
+      <div class="a-stack a-mt-5" style="gap:var(--space-4)">
+        <label class="a-field">
+          <span class="a-field__label">Email</span>
+          <span class="a-input a-input--lg"><span class="a-icon">mail</span>
+            <input type="email" placeholder="name@tsin.ca" autocomplete="email"></span>
+        </label>
+        <label class="a-field">
+          <span class="a-field__label">Password</span>
+          <span class="a-input a-input--lg"><span class="a-icon">lock</span>
+            <input type="password" placeholder="••••••••••" autocomplete="current-password">
+            <span class="a-icon" style="cursor:pointer">visibility</span></span>
+        </label>
+        <div class="a-row a-row--between">
+          <label class="a-row" style="gap:8px;font:var(--a-type-body-sm)">
+            <input type="checkbox" checked style="accent-color:var(--a-teal);width:16px;height:16px"> Keep me signed in
+          </label>
+          <a href="#" style="font:var(--a-type-body-sm)">Forgot password?</a>
+        </div>
+        <button class="a-btn a-btn--filled a-btn--lg">Sign in</button>
+        <div class="divider-label">or continue with</div>
+        <div class="social">
+          <button class="a-btn a-btn--outlined"><span class="a-icon">mail</span>Google</button>
+          <button class="a-btn a-btn--outlined"><span class="a-icon">grid_view</span>Microsoft</button>
+        </div>
+      </div>
+
+      <hr class="a-divider" style="margin-top:var(--space-5)">
+      <p class="a-body-sm" style="color:var(--a-ink-muted)">
+        New to Touchstone? <a href="#">Create an account</a>
+      </p>
+    </div>
+  </main>
+
+</div>
+</body>
+</html>

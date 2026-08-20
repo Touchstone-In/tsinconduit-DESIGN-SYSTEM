@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Conduit Dashboard — Home</title>
+<link rel="stylesheet" href="../../projects/assay-ui/styles/tokens.css">
+<link rel="stylesheet" href="../../projects/assay-ui/styles/toolkit.css">
+<style>
+  .apps { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-4); }
+  .app-tile {
+    display: flex; flex-direction: column; gap: var(--space-3);
+    padding: var(--space-4); border-radius: var(--a-radius-card);
+    background: var(--a-surface); border: 1px solid var(--a-border-subtle);
+    text-decoration: none; color: var(--a-ink-body);
+    transition: box-shadow var(--a-motion-standard), transform var(--a-motion-standard);
+  }
+  .app-tile:hover { box-shadow: var(--a-shadow-lg); transform: translateY(-2px); text-decoration: none; }
+  .app-tile__icon {
+    width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center;
+    background: var(--a-teal-wash); color: var(--a-teal-action);
+  }
+  .app-tile__name { font: var(--a-type-subhead); color: var(--a-ink); }
+  .app-tile__desc { font: var(--a-type-caption); color: var(--a-ink-muted); }
+</style>
+<script src="shell.js"></script>
+</head>
+<body class="a-shell">
+<script>
+renderShell({
+  service: 'Dashboard',
+  pageContext: 'Home',
+  searchScope: 'across Conduit',
+  accountMenuOpen: true,
+  user: { name: 'Amara Osei', role: 'Program Operations', initials: 'AO', email: 'a.osei@tsin.ca' },
+  nav: [
+    { icon: 'home', label: 'Home', active: true },
+    { icon: 'apps', label: 'My apps' },
+    { icon: 'task_alt', label: 'Tasks', badge: '4' },
+    { icon: 'notifications', label: 'Activity' },
+    { section: 'Workspace' },
+    { icon: 'calendar_month', label: 'Calendar' },
+    { icon: 'group', label: 'People' },
+    { icon: 'description', label: 'Documents' },
+  ],
+});
+</script>
+
+<main class="a-main"><div class="a-main__inner">
+
+  <div class="a-page-head">
+    <div class="a-page-head__row">
+      <div>
+        <h1 class="a-display">Good morning, Amara</h1>
+        <p class="a-page-head__sub">Tuesday, August 19 — 3 sessions today, 4 tasks waiting.</p>
+      </div>
+      <div class="a-page-head__actions">
+        <button class="a-btn a-btn--outlined"><span class="a-icon">tune</span>Customize</button>
+      </div>
+    </div>
+    <span class="a-current-bar"></span>
+  </div>
+
+  <section class="a-mb-4">
+    <div class="a-row a-row--between a-mb-4">
+      <h2 class="a-heading">Your Conduit apps</h2>
+      <a href="#" class="a-body-sm">View all 13</a>
+    </div>
+    <div class="apps">
+      <a class="app-tile" href="#"><span class="app-tile__icon"><span class="a-icon">school</span></span>
+        <span><span class="app-tile__name">Campus</span><br><span class="app-tile__desc">Courses &amp; programs</span></span></a>
+      <a class="app-tile" href="#"><span class="app-tile__icon"><span class="a-icon">quiz</span></span>
+        <span><span class="app-tile__name">Exams</span><br><span class="app-tile__desc">Assessment delivery</span></span></a>
+      <a class="app-tile" href="#"><span class="app-tile__icon"><span class="a-icon">videocam</span></span>
+        <span><span class="app-tile__name">Connect</span><br><span class="app-tile__desc">Virtual sessions</span></span></a>
+      <a class="app-tile" href="#"><span class="app-tile__icon"><span class="a-icon">mail</span></span>
+        <span><span class="app-tile__name">Mail</span><br><span class="app-tile__desc">Inbox &amp; threads</span></span></a>
+      <a class="app-tile" href="#"><span class="app-tile__icon"><span class="a-icon">monitoring</span></span>
+        <span><span class="app-tile__name">Insights</span><br><span class="app-tile__desc">Suite analytics</span></span></a>
+      <a class="app-tile" href="#"><span class="app-tile__icon"><span class="a-icon">record_voice_over</span></span>
+        <span><span class="app-tile__name">CELBAN</span><br><span class="app-tile__desc">Language benchmark</span></span></a>
+      <a class="app-tile" href="#"><span class="app-tile__icon"><span class="a-icon">folder_shared</span></span>
+        <span><span class="app-tile__name">SecureShare</span><br><span class="app-tile__desc">Protected files</span></span></a>
+      <a class="app-tile" href="#"><span class="app-tile__icon"><span class="a-icon">payments</span></span>
+        <span><span class="app-tile__name">Payments</span><br><span class="app-tile__desc">Fees &amp; invoices</span></span></a>
+    </div>
+  </section>
+
+  <div class="a-grid a-grid--main-side a-mt-5">
+    <section class="a-card">
+      <div class="a-card__head">
+        <h2 class="a-heading">Continue where you left off</h2>
+        <button class="a-btn a-btn--ghost a-btn--sm">See all</button>
+      </div>
+      <div class="a-list">
+        <div class="a-list__row">
+          <span class="a-list__glyph"><span class="a-icon">school</span></span>
+          <span class="a-list__body"><span class="a-list__title">OSCE Station Design — Module 4</span><br>
+            <span class="a-list__meta">Campus · 68% complete · resumed 2 h ago</span></span>
+          <span class="a-list__trail" style="width:160px"><span class="a-progress" style="flex:1"><span class="a-progress__fill" style="width:68%"></span></span></span>
+        </div>
+        <div class="a-list__row">
+          <span class="a-list__glyph"><span class="a-icon">quiz</span></span>
+          <span class="a-list__body"><span class="a-list__title">CELBAN Writing — rater calibration set</span><br>
+            <span class="a-list__meta">Exams · 12 of 20 responses scored</span></span>
+          <span class="a-list__trail" style="width:160px"><span class="a-progress" style="flex:1"><span class="a-progress__fill" style="width:60%"></span></span></span>
+        </div>
+        <div class="a-list__row">
+          <span class="a-list__glyph"><span class="a-icon">videocam</span></span>
+          <span class="a-list__body"><span class="a-list__title">MMI circuit dry-run with assessor panel</span><br>
+            <span class="a-list__meta">Connect · scheduled 2:00 PM today</span></span>
+          <span class="a-list__trail"><span class="a-badge a-badge--info">Today</span></span>
+        </div>
+        <div class="a-list__row">
+          <span class="a-list__glyph"><span class="a-icon">monitoring</span></span>
+          <span class="a-list__body"><span class="a-list__title">Q3 candidate-volume report</span><br>
+            <span class="a-list__meta">Insights · draft shared with you yesterday</span></span>
+          <span class="a-list__trail"><span class="a-badge a-badge--neutral">Draft</span></span>
+        </div>
+      </div>
+    </section>
+
+    <div class="a-stack" style="gap:var(--a-gutter)">
+      <section class="a-card">
+        <div class="a-card__head"><h2 class="a-subhead">Tasks</h2><span class="a-badge a-badge--warning">4 open</span></div>
+        <div class="a-stack">
+          <label class="a-row" style="gap:10px"><input type="checkbox" style="accent-color:var(--a-teal);width:16px;height:16px">
+            <span class="a-body-sm">Approve September exam sitting roster</span></label>
+          <label class="a-row" style="gap:10px"><input type="checkbox" style="accent-color:var(--a-teal);width:16px;height:16px">
+            <span class="a-body-sm">Review 3 flagged SecureShare requests</span></label>
+          <label class="a-row" style="gap:10px"><input type="checkbox" style="accent-color:var(--a-teal);width:16px;height:16px">
+            <span class="a-body-sm">Confirm assessor honoraria batch</span></label>
+          <label class="a-row" style="gap:10px"><input type="checkbox" style="accent-color:var(--a-teal);width:16px;height:16px">
+            <span class="a-body-sm">Publish Campus module 5 outline</span></label>
+        </div>
+      </section>
+
+      <section class="a-card">
+        <div class="a-card__head"><h2 class="a-subhead">Announcements</h2></div>
+        <div class="a-stack" style="gap:var(--space-4)">
+          <div>
+            <div class="a-list__title">Fall assessment window opens Sep 2</div>
+            <div class="a-list__meta">Scheduling for PRO and CELBAN cohorts begins next week.</div>
+          </div>
+          <hr class="a-divider" style="margin:0">
+          <div>
+            <div class="a-list__title">New: keyboard shortcuts across Conduit</div>
+            <div class="a-list__meta">Press <kbd style="font:var(--a-type-caption);border:1px solid var(--a-border-subtle);border-radius:4px;padding:1px 5px">/</kbd> anywhere to search.</div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+</div>
+<script>renderFooter()</script>
+</main>
+</body>
+</html>

@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CELBAN — Applicant portal</title>
+<link rel="stylesheet" href="../../projects/assay-ui/styles/tokens.css">
+<link rel="stylesheet" href="../../projects/assay-ui/styles/toolkit.css">
+<style>
+  .stepper { display: flex; align-items: center; gap: 0; }
+  .step { display: flex; align-items: center; gap: var(--space-2); flex: none; }
+  .step__dot { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center;
+    font: var(--a-type-caption); font-weight: 600; }
+  .step--done .step__dot { background: var(--a-teal); color: #fff; }
+  .step--current .step__dot { background: var(--a-teal-light); color: var(--a-ink); box-shadow: 0 0 0 3px rgba(2,129,160,.25); }
+  .step--todo .step__dot { background: var(--a-surface-sunken); color: var(--a-ink-muted); }
+  .step__label { font: var(--a-type-caption); color: var(--a-ink-body); white-space: nowrap; }
+  .step--current .step__label { color: var(--a-ink); font-weight: 600; }
+  .step-line { flex: 1; height: 2px; background: var(--a-border-subtle); margin: 0 var(--space-3); min-width: 24px; }
+  .step-line--done { background: var(--a-teal); }
+  .band { text-align: center; padding: var(--space-4); border-radius: var(--a-radius-input); background: var(--a-surface-sunken); }
+  .band__score { font: var(--a-type-display); color: var(--a-ink); font-variant-numeric: tabular-nums; }
+</style>
+<script src="shell.js"></script>
+</head>
+<body class="a-shell">
+<script>
+renderShell({
+  service: 'CELBAN',
+  pageContext: 'Applicant portal',
+  searchScope: 'CELBAN',
+  user: { name: 'Rosa Dela Cruz', role: 'Applicant', initials: 'RD' },
+  nav: [
+    { icon: 'home', label: 'Overview', active: true },
+    { icon: 'assignment', label: 'My registration' },
+    { icon: 'event', label: 'Test sessions' },
+    { icon: 'grade', label: 'Results' },
+    { icon: 'upload_file', label: 'Documents' },
+    { section: 'Prepare' },
+    { icon: 'menu_book', label: 'Practice materials' },
+    { icon: 'help', label: 'FAQ' },
+  ],
+});
+</script>
+
+<main class="a-main"><div class="a-main__inner">
+
+  <div class="a-page-head">
+    <div class="a-page-head__row">
+      <div>
+        <h1 class="a-title">Welcome back, Rosa</h1>
+        <p class="a-page-head__sub">CELBAN — Canadian English Language Benchmark Assessment for Nurses</p>
+      </div>
+      <div class="a-page-head__actions">
+        <button class="a-btn a-btn--filled"><span class="a-icon">event</span>Book next session</button>
+      </div>
+    </div>
+    <span class="a-current-bar"></span>
+  </div>
+
+  <section class="a-card a-mb-4">
+    <div class="a-card__head"><h2 class="a-subhead">Your registration</h2><span class="a-badge a-badge--info">In progress</span></div>
+    <div class="stepper">
+      <div class="step step--done"><span class="step__dot"><span class="a-icon a-icon--xs">check</span></span><span class="step__label">Profile</span></div>
+      <div class="step-line step-line--done"></div>
+      <div class="step step--done"><span class="step__dot"><span class="a-icon a-icon--xs">check</span></span><span class="step__label">ID verification</span></div>
+      <div class="step-line step-line--done"></div>
+      <div class="step step--done"><span class="step__dot"><span class="a-icon a-icon--xs">check</span></span><span class="step__label">Payment</span></div>
+      <div class="step-line"></div>
+      <div class="step step--current"><span class="step__dot">4</span><span class="step__label">Book session</span></div>
+      <div class="step-line"></div>
+      <div class="step step--todo"><span class="step__dot">5</span><span class="step__label">Take CELBAN</span></div>
+      <div class="step-line"></div>
+      <div class="step step--todo"><span class="step__dot">6</span><span class="step__label">Results</span></div>
+    </div>
+  </section>
+
+  <div class="a-grid a-grid--main-side">
+    <div class="a-stack" style="gap:var(--a-gutter)">
+      <section class="a-card">
+        <div class="a-card__head">
+          <h2 class="a-heading">Available test sessions</h2>
+          <div class="a-row" style="gap:8px">
+            <span class="a-chip a-chip--selected">Toronto</span>
+            <span class="a-chip">Online-proctored</span>
+          </div>
+        </div>
+        <div class="a-list">
+          <div class="a-list__row">
+            <span class="a-list__glyph"><span class="a-icon">event</span></span>
+            <span class="a-list__body"><span class="a-list__title">Saturday, September 13 · 9:00 AM</span><br>
+              <span class="a-list__meta">Touchstone Institute, Toronto · 14 seats left</span></span>
+            <button class="a-btn a-btn--tonal a-btn--sm">Select</button>
+          </div>
+          <div class="a-list__row">
+            <span class="a-list__glyph"><span class="a-icon">event</span></span>
+            <span class="a-list__body"><span class="a-list__title">Sunday, September 21 · 1:00 PM</span><br>
+              <span class="a-list__meta">Touchstone Institute, Toronto · 6 seats left</span></span>
+            <button class="a-btn a-btn--tonal a-btn--sm">Select</button>
+          </div>
+          <div class="a-list__row">
+            <span class="a-list__glyph"><span class="a-icon">event_busy</span></span>
+            <span class="a-list__body"><span class="a-list__title">Saturday, October 4 · 9:00 AM</span><br>
+              <span class="a-list__meta">Toronto · waitlist only</span></span>
+            <button class="a-btn a-btn--outlined a-btn--sm">Join waitlist</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="a-card">
+        <div class="a-card__head">
+          <h2 class="a-heading">Previous attempt — March 2026</h2>
+          <button class="a-btn a-btn--ghost a-btn--sm"><span class="a-icon">download</span>Official report</button>
+        </div>
+        <div class="a-grid a-grid--4">
+          <div class="band"><div class="band__score">8</div><div class="a-caption">Listening · CLB</div></div>
+          <div class="band"><div class="band__score">7</div><div class="a-caption">Speaking · CLB</div></div>
+          <div class="band"><div class="band__score">8</div><div class="a-caption">Reading · CLB</div></div>
+          <div class="band"><div class="band__score">6</div><div class="a-caption">Writing · CLB</div></div>
+        </div>
+        <div class="a-banner a-banner--info a-mt-4">
+          <span class="a-icon">lightbulb</span>
+          <span class="a-banner__body">Most registration bodies require CLB 7 in writing.
+            Your free re-take credit applies to the writing component only.</span>
+        </div>
+      </section>
+    </div>
+
+    <div class="a-stack" style="gap:var(--a-gutter)">
+      <section class="a-card">
+        <h2 class="a-subhead a-mb-4">Documents</h2>
+        <div class="a-list">
+          <div class="a-list__row" style="padding:var(--space-3) var(--space-2)">
+            <span class="a-icon" style="color:var(--a-success)">check_circle</span>
+            <span class="a-list__body"><span class="a-list__title">Passport (ID page)</span><br><span class="a-list__meta">Verified Jul 3</span></span>
+          </div>
+          <div class="a-list__row" style="padding:var(--space-3) var(--space-2)">
+            <span class="a-icon" style="color:var(--a-success)">check_circle</span>
+            <span class="a-list__body"><span class="a-list__title">Nursing credential evaluation</span><br><span class="a-list__meta">Verified Jul 9</span></span>
+          </div>
+          <div class="a-list__row" style="padding:var(--space-3) var(--space-2)">
+            <span class="a-icon" style="color:var(--a-warning)">pending</span>
+            <span class="a-list__body"><span class="a-list__title">Proof of address</span><br><span class="a-list__meta">Under review</span></span>
+          </div>
+        </div>
+        <button class="a-btn a-btn--outlined a-mt-4" style="width:100%"><span class="a-icon">upload_file</span>Upload document</button>
+      </section>
+
+      <section class="a-card">
+        <h2 class="a-subhead a-mb-4">Prepare for test day</h2>
+        <div class="a-stack">
+          <a href="#" class="a-row" style="gap:10px"><span class="a-icon a-icon--sm">play_circle</span><span class="a-body-sm">Speaking task walkthrough (12 min)</span></a>
+          <a href="#" class="a-row" style="gap:10px"><span class="a-icon a-icon--sm">description</span><span class="a-body-sm">Writing scoring guide</span></a>
+          <a href="#" class="a-row" style="gap:10px"><span class="a-icon a-icon--sm">quiz</span><span class="a-body-sm">Practice listening set</span></a>
+        </div>
+      </section>
+    </div>
+  </div>
+
+</div>
+<script>renderFooter()</script>
+</main>
+</body>
+</html>

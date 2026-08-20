@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Learning — My learning</title>
+<link rel="stylesheet" href="../../projects/assay-ui/styles/tokens.css">
+<link rel="stylesheet" href="../../projects/assay-ui/styles/toolkit.css">
+<style>
+  .course-card { display: flex; flex-direction: column; gap: 0; overflow: hidden; padding: 0; }
+  .course-card__banner { height: 96px; position: relative; }
+  .course-card__banner .a-icon { position: absolute; right: 16px; bottom: -20px; width: 44px; height: 44px;
+    display: grid; place-items: center; background: var(--a-surface); border-radius: 12px;
+    box-shadow: var(--a-shadow-sm); color: var(--a-teal-action); font-size: 24px; }
+  .course-card__body { padding: var(--space-4) var(--space-4) var(--space-5); display: flex; flex-direction: column; gap: var(--space-3); }
+</style>
+<script src="shell.js"></script>
+</head>
+<body class="a-shell">
+<script>
+renderShell({
+  service: 'Learning',
+  pageContext: 'My learning',
+  searchScope: 'the catalogue',
+  nav: [
+    { icon: 'home', label: 'Home' },
+    { icon: 'menu_book', label: 'My learning', active: true },
+    { icon: 'explore', label: 'Catalogue' },
+    { icon: 'workspace_premium', label: 'Certificates' },
+    { icon: 'bookmark', label: 'Saved' },
+    { section: 'Community' },
+    { icon: 'forum', label: 'Study groups' },
+    { icon: 'event', label: 'Events' },
+  ],
+});
+</script>
+
+<main class="a-main"><div class="a-main__inner">
+
+  <div class="a-page-head">
+    <div class="a-page-head__row">
+      <div>
+        <h1 class="a-title">My learning</h1>
+        <p class="a-page-head__sub">2 in progress · 5 completed · 1 certificate earned this year</p>
+      </div>
+      <div class="a-page-head__actions">
+        <button class="a-btn a-btn--filled"><span class="a-icon">explore</span>Browse catalogue</button>
+      </div>
+    </div>
+    <span class="a-current-bar"></span>
+  </div>
+
+  <div class="a-row a-mb-4" style="gap:var(--space-2)">
+    <span class="a-chip a-chip--selected"><span class="a-icon">check</span>All</span>
+    <span class="a-chip">In progress</span>
+    <span class="a-chip">Completed</span>
+    <span class="a-chip">Clinical communication</span>
+    <span class="a-chip">Professional practice</span>
+    <span class="a-chip"><span class="a-icon">filter_list</span>More filters</span>
+  </div>
+
+  <div class="a-grid a-grid--3">
+    <article class="a-card a-card--hover course-card">
+      <div class="course-card__banner" style="background:linear-gradient(120deg,#0C2233,#0E4B61)">
+        <span class="a-icon">record_voice_over</span>
+      </div>
+      <div class="course-card__body">
+        <span class="a-overline">Clinical communication</span>
+        <h2 class="a-subhead">Communicating with Empathy in High-Stakes Encounters</h2>
+        <div>
+          <div class="a-row a-row--between" style="margin-bottom:6px">
+            <span class="a-caption">7 of 10 lessons</span><span class="a-caption">70%</span>
+          </div>
+          <div class="a-progress"><span class="a-progress__fill" style="width:70%"></span></div>
+        </div>
+        <button class="a-btn a-btn--tonal a-btn--sm" style="align-self:flex-start"><span class="a-icon">play_arrow</span>Continue</button>
+      </div>
+    </article>
+
+    <article class="a-card a-card--hover course-card">
+      <div class="course-card__banner" style="background:linear-gradient(120deg,#123A57,#0281A0)">
+        <span class="a-icon">clinical_notes</span>
+      </div>
+      <div class="course-card__body">
+        <span class="a-overline">Professional practice</span>
+        <h2 class="a-subhead">Documentation Essentials for Internationally Educated Nurses</h2>
+        <div>
+          <div class="a-row a-row--between" style="margin-bottom:6px">
+            <span class="a-caption">3 of 12 lessons</span><span class="a-caption">25%</span>
+          </div>
+          <div class="a-progress"><span class="a-progress__fill" style="width:25%"></span></div>
+        </div>
+        <button class="a-btn a-btn--tonal a-btn--sm" style="align-self:flex-start"><span class="a-icon">play_arrow</span>Continue</button>
+      </div>
+    </article>
+
+    <article class="a-card a-card--hover course-card">
+      <div class="course-card__banner" style="background:linear-gradient(120deg,#28502B,#5E9A43)">
+        <span class="a-icon">diversity_3</span>
+      </div>
+      <div class="course-card__body">
+        <span class="a-overline">Orientation</span>
+        <h2 class="a-subhead">Working in Canadian Interprofessional Care Teams</h2>
+        <div class="a-row" style="gap:8px">
+          <span class="a-badge a-badge--success">Completed</span>
+          <span class="a-caption">Jul 28 · certificate issued</span>
+        </div>
+        <button class="a-btn a-btn--outlined a-btn--sm" style="align-self:flex-start"><span class="a-icon">download</span>Certificate</button>
+      </div>
+    </article>
+  </div>
+
+  <section class="a-card a-mt-5">
+    <div class="a-card__head">
+      <h2 class="a-heading">Recommended for your pathway</h2>
+      <span class="a-caption">Based on: IEN bridging · CELBAN complete</span>
+    </div>
+    <div class="a-list">
+      <div class="a-list__row">
+        <span class="a-list__glyph"><span class="a-icon">medication</span></span>
+        <span class="a-list__body"><span class="a-list__title">Medication Safety: Canadian Standards and Terminology</span><br>
+          <span class="a-list__meta">8 lessons · 3.5 h · self-paced</span></span>
+        <span class="a-list__trail"><button class="a-btn a-btn--ghost a-btn--sm">Enrol</button></span>
+      </div>
+      <div class="a-list__row">
+        <span class="a-list__glyph"><span class="a-icon">gavel</span></span>
+        <span class="a-list__body"><span class="a-list__title">Consent, Privacy and PHIPA in Daily Practice</span><br>
+          <span class="a-list__meta">6 lessons · 2 h · self-paced</span></span>
+        <span class="a-list__trail"><button class="a-btn a-btn--ghost a-btn--sm">Enrol</button></span>
+      </div>
+      <div class="a-list__row">
+        <span class="a-list__glyph"><span class="a-icon">psychology</span></span>
+        <span class="a-list__body"><span class="a-list__title">Clinical Judgement: From Assessment to Escalation</span><br>
+          <span class="a-list__meta">10 lessons · 4 h · cohort starts Sep 8</span></span>
+        <span class="a-list__trail"><button class="a-btn a-btn--ghost a-btn--sm">Enrol</button></span>
+      </div>
+    </div>
+  </section>
+
+</div>
+<script>renderFooter()</script>
+</main>
+</body>
+</html>

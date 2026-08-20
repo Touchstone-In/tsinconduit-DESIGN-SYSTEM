@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Payments — Billing</title>
+<link rel="stylesheet" href="../../projects/assay-ui/styles/tokens.css">
+<link rel="stylesheet" href="../../projects/assay-ui/styles/toolkit.css">
+<style>
+  .a-table__primary { white-space: nowrap; }
+</style>
+<script src="shell.js"></script>
+</head>
+<body class="a-shell">
+<script>
+renderShell({
+  service: 'Payments',
+  pageContext: 'Billing & receipts',
+  searchScope: 'invoices',
+  user: { name: 'Rosa Dela Cruz', role: 'Applicant', initials: 'RD' },
+  nav: [
+    { icon: 'home', label: 'Overview', active: true },
+    { icon: 'receipt_long', label: 'Invoices & receipts' },
+    { icon: 'credit_card', label: 'Payment methods' },
+    { icon: 'currency_exchange', label: 'Refunds' },
+    { section: 'Help' },
+    { icon: 'help', label: 'Fee schedule' },
+    { icon: 'support_agent', label: 'Billing support' },
+  ],
+});
+</script>
+
+<main class="a-main"><div class="a-main__inner">
+
+  <div class="a-page-head">
+    <div class="a-page-head__row">
+      <div>
+        <h1 class="a-title">Billing &amp; receipts</h1>
+        <p class="a-page-head__sub">All fees across Conduit services, in one place</p>
+      </div>
+      <div class="a-page-head__actions">
+        <button class="a-btn a-btn--outlined"><span class="a-icon">download</span>Download all receipts</button>
+      </div>
+    </div>
+    <span class="a-current-bar"></span>
+  </div>
+
+  <div class="a-grid a-grid--main-side">
+    <div class="a-stack" style="gap:var(--a-gutter)">
+      <section class="a-card" style="border-left:4px solid var(--a-warning)">
+        <div class="a-card__head">
+          <div>
+            <span class="a-overline">Due now</span>
+            <h2 class="a-heading" style="margin-top:4px">CELBAN writing re-take fee</h2>
+          </div>
+          <span class="a-title" style="font-variant-numeric:tabular-nums">$155.00</span>
+        </div>
+        <p class="a-body-sm" style="color:var(--a-ink-muted)">
+          Invoice CB-2026-8841 · issued Aug 12 · due Aug 26 · your re-take credit of
+          $155.00 has been applied to the original $310.00 fee.
+        </p>
+        <div class="a-row a-mt-4" style="gap:var(--space-3)">
+          <button class="a-btn a-btn--filled"><span class="a-icon">lock</span>Pay securely</button>
+          <button class="a-btn a-btn--outlined">View invoice</button>
+        </div>
+      </section>
+
+      <section class="a-card">
+        <div class="a-card__head">
+          <h2 class="a-heading">Payment history</h2>
+          <span class="a-chip"><span class="a-icon">filter_list</span>2026</span>
+        </div>
+        <table class="a-table a-table--num">
+          <thead><tr><th>Invoice</th><th>Service</th><th>Date</th><th>Amount</th><th>Status</th><th></th></tr></thead>
+          <tbody>
+            <tr>
+              <td class="a-table__primary">CB-2026-7702</td><td>CELBAN — full assessment</td>
+              <td>Jun 2</td><td>$310.00</td>
+              <td><span class="a-badge a-badge--success">Paid</span></td>
+              <td><button class="a-btn a-btn--ghost a-btn--sm"><span class="a-icon">download</span>Receipt</button></td>
+            </tr>
+            <tr>
+              <td class="a-table__primary">EX-2026-5518</td><td>Exams — OSCE fall sitting</td>
+              <td>May 20</td><td>$1,240.00</td>
+              <td><span class="a-badge a-badge--success">Paid</span></td>
+              <td><button class="a-btn a-btn--ghost a-btn--sm"><span class="a-icon">download</span>Receipt</button></td>
+            </tr>
+            <tr>
+              <td class="a-table__primary">LR-2026-3110</td><td>Learning — bridging bundle</td>
+              <td>Apr 8</td><td>$95.00</td>
+              <td><span class="a-badge a-badge--success">Paid</span></td>
+              <td><button class="a-btn a-btn--ghost a-btn--sm"><span class="a-icon">download</span>Receipt</button></td>
+            </tr>
+            <tr>
+              <td class="a-table__primary">EX-2025-9046</td><td>Exams — written exam</td>
+              <td>Nov 30, 2025</td><td>$620.00</td>
+              <td><span class="a-badge a-badge--neutral">Refunded</span></td>
+              <td><button class="a-btn a-btn--ghost a-btn--sm"><span class="a-icon">download</span>Receipt</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </div>
+
+    <div class="a-stack" style="gap:var(--a-gutter)">
+      <section class="a-card">
+        <div class="a-card__head"><h2 class="a-subhead">Payment methods</h2>
+          <button class="a-btn a-btn--ghost a-btn--sm"><span class="a-icon">add</span>Add</button></div>
+        <div class="a-list">
+          <div class="a-list__row" style="padding:var(--space-3) var(--space-2)">
+            <span class="a-list__glyph"><span class="a-icon">credit_card</span></span>
+            <span class="a-list__body"><span class="a-list__title">Visa •••• 4212</span><br>
+              <span class="a-list__meta">Expires 09/28 · default</span></span>
+            <span class="a-badge a-badge--info">Default</span>
+          </div>
+          <div class="a-list__row" style="padding:var(--space-3) var(--space-2)">
+            <span class="a-list__glyph"><span class="a-icon">account_balance</span></span>
+            <span class="a-list__body"><span class="a-list__title">Interac e-Transfer</span><br>
+              <span class="a-list__meta">Verified Jul 2026</span></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="a-card">
+        <h2 class="a-subhead a-mb-4">2026 summary</h2>
+        <div class="a-stack" style="gap:var(--space-2)">
+          <div class="a-row a-row--between"><span class="a-body-sm">Total paid</span><span class="a-body-sm" style="font-weight:600;color:var(--a-ink)">$1,645.00</span></div>
+          <div class="a-row a-row--between"><span class="a-body-sm">Credits applied</span><span class="a-body-sm" style="font-weight:600;color:var(--a-ink)">$155.00</span></div>
+          <div class="a-row a-row--between"><span class="a-body-sm">Outstanding</span><span class="a-body-sm" style="font-weight:600;color:var(--a-warning)">$155.00</span></div>
+        </div>
+        <hr class="a-divider">
+        <p class="a-caption">Receipts are accepted by most regulatory bodies as proof of program fees. Need a tax summary? <a href="#">Generate T2202-style statement</a></p>
+      </section>
+
+      <div class="a-banner a-banner--info">
+        <span class="a-icon">encrypted</span>
+        <span class="a-banner__body">Card details are processed by our PCI-DSS certified provider and never stored on Conduit servers.</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+<script>renderFooter()</script>
+</main>
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Connect — Sessions</title>
+<link rel="stylesheet" href="../../projects/assay-ui/styles/tokens.css">
+<link rel="stylesheet" href="../../projects/assay-ui/styles/toolkit.css">
+<style>
+  .quick { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4); }
+  .quick__btn {
+    display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-3);
+    padding: var(--space-5); border-radius: var(--a-radius-card); border: 1px solid var(--a-border-subtle);
+    background: var(--a-surface); cursor: pointer; text-align: left;
+    transition: box-shadow var(--a-motion-standard), transform var(--a-motion-standard);
+  }
+  .quick__btn:hover { box-shadow: var(--a-shadow-lg); transform: translateY(-2px); }
+  .quick__icon { width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center; }
+</style>
+<script src="shell.js"></script>
+</head>
+<body class="a-shell">
+<script>
+renderShell({
+  service: 'Connect',
+  pageContext: 'Sessions',
+  searchScope: 'sessions & recordings',
+  nav: [
+    { icon: 'home', label: 'Home', active: true },
+    { icon: 'videocam', label: 'My sessions' },
+    { icon: 'calendar_month', label: 'Calendar' },
+    { icon: 'smart_display', label: 'Recordings', badge: '3' },
+    { icon: 'subtitles', label: 'Transcripts' },
+    { section: 'Admin' },
+    { icon: 'meeting_room', label: 'Rooms' },
+    { icon: 'tune', label: 'Session policies' },
+  ],
+});
+</script>
+
+<main class="a-main"><div class="a-main__inner">
+
+  <div class="a-page-head">
+    <div class="a-page-head__row">
+      <div>
+        <h1 class="a-title">Sessions</h1>
+        <p class="a-page-head__sub">Virtual delivery for courses, assessments and everyday meetings</p>
+      </div>
+    </div>
+    <span class="a-current-bar"></span>
+  </div>
+
+  <div class="quick a-mb-4">
+    <button class="quick__btn">
+      <span class="quick__icon" style="background:var(--a-teal-action);color:#fff"><span class="a-icon">videocam</span></span>
+      <span><span class="a-subhead">Start a session now</span><br>
+        <span class="a-caption">Instant room, invite by link — guests don't need an account</span></span>
+    </button>
+    <button class="quick__btn">
+      <span class="quick__icon" style="background:var(--a-teal-wash);color:var(--a-teal-action)"><span class="a-icon">calendar_add_on</span></span>
+      <span><span class="a-subhead">Schedule</span><br>
+        <span class="a-caption">Waiting room, registration and reminders included</span></span>
+    </button>
+    <button class="quick__btn">
+      <span class="quick__icon" style="background:var(--a-teal-wash);color:var(--a-teal-action)"><span class="a-icon">keyboard</span></span>
+      <span><span class="a-subhead">Join with a code</span><br>
+        <span class="a-caption">Enter the 10-character session code from your invite</span></span>
+    </button>
+  </div>
+
+  <div class="a-grid a-grid--main-side">
+    <section class="a-card">
+      <div class="a-card__head">
+        <h2 class="a-heading">Upcoming</h2>
+        <button class="a-btn a-btn--ghost a-btn--sm">Open calendar</button>
+      </div>
+      <div class="a-list">
+        <div class="a-list__row">
+          <span class="a-list__glyph"><span class="a-icon">school</span></span>
+          <span class="a-list__body"><span class="a-list__title">OSCE rating calibration workshop</span><br>
+            <span class="a-list__meta">Today · 1:00–2:30 PM · launched from Campus (module 4)</span></span>
+          <span class="a-list__trail">
+            <span class="a-badge a-badge--info">Campus · LTI</span>
+            <button class="a-btn a-btn--filled a-btn--sm">Join</button>
+          </span>
+        </div>
+        <div class="a-list__row">
+          <span class="a-list__glyph"><span class="a-icon">co_present</span></span>
+          <span class="a-list__body"><span class="a-list__title">MMI circuit dry-run — assessor panel</span><br>
+            <span class="a-list__meta">Today · 2:00–3:00 PM · waiting room on · recording on</span></span>
+          <span class="a-list__trail">
+            <span class="a-badge a-badge--neutral">Standalone</span>
+            <button class="a-btn a-btn--outlined a-btn--sm">Details</button>
+          </span>
+        </div>
+        <div class="a-list__row">
+          <span class="a-list__glyph"><span class="a-icon">groups</span></span>
+          <span class="a-list__body"><span class="a-list__title">New assessor orientation — cohort 12</span><br>
+            <span class="a-list__meta">Thu Aug 21 · 10:00 AM · 46 registered · 2 co-hosts</span></span>
+          <span class="a-list__trail">
+            <span class="a-badge a-badge--neutral">Standalone</span>
+            <button class="a-btn a-btn--outlined a-btn--sm">Details</button>
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <div class="a-stack" style="gap:var(--a-gutter)">
+      <section class="a-card">
+        <div class="a-card__head"><h2 class="a-subhead">Recent recordings</h2></div>
+        <div class="a-list">
+          <div class="a-list__row" style="padding:var(--space-3) var(--space-2)">
+            <span class="a-list__glyph"><span class="a-icon">smart_display</span></span>
+            <span class="a-list__body"><span class="a-list__title">Standard-setting panel — day 2</span><br>
+              <span class="a-list__meta">Aug 15 · 1 h 48 m · transcript ready</span></span>
+          </div>
+          <div class="a-list__row" style="padding:var(--space-3) var(--space-2)">
+            <span class="a-list__glyph"><span class="a-icon">smart_display</span></span>
+            <span class="a-list__body"><span class="a-list__title">Campus live workshop — module 3</span><br>
+              <span class="a-list__meta">Aug 11 · 55 m · attendance synced to Campus</span></span>
+          </div>
+          <div class="a-list__row" style="padding:var(--space-3) var(--space-2)">
+            <span class="a-list__glyph"><span class="a-icon">smart_display</span></span>
+            <span class="a-list__body"><span class="a-list__title">Exam-day proctor briefing</span><br>
+              <span class="a-list__meta">Aug 8 · 32 m</span></span>
+          </div>
+        </div>
+      </section>
+
+      <div class="a-banner a-banner--success">
+        <span class="a-icon">verified</span>
+        <span class="a-banner__body"><span class="a-banner__title">Attendance passback is on</span><br>
+          Sessions launched from Campus report attendance to the course gradebook automatically.</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+<script>renderFooter()</script>
+</main>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Conduit Mail — Inbox</title>
+<link rel="stylesheet" href="../../projects/assay-ui/styles/tokens.css">
+<link rel="stylesheet" href="../../projects/assay-ui/styles/toolkit.css">
+<style>
+  .mail { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--a-gutter); align-items: start; }
+  .msg { display: flex; gap: var(--space-3); padding: var(--space-3); border-radius: var(--a-radius-input); cursor: pointer; }
+  .msg:hover { background: var(--a-teal-wash); }
+  .msg--unread .msg__from, .msg--unread .msg__subject { font-weight: 600; color: var(--a-ink); }
+  .msg--open { background: var(--a-teal-light); }
+  .msg__body { flex: 1; min-width: 0; }
+  .msg__from { font: var(--a-type-body-sm); color: var(--a-ink-body); }
+  .msg__subject { display: block; font: var(--a-type-body-sm); color: var(--a-ink-body); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .msg__preview { display: block; font: var(--a-type-caption); color: var(--a-ink-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .msg__time { font: var(--a-type-caption); color: var(--a-ink-muted); flex: none; }
+</style>
+<script src="shell.js"></script>
+</head>
+<body class="a-shell">
+<script>
+renderShell({
+  service: 'Mail',
+  pageContext: 'Inbox',
+  searchScope: 'mail',
+  nav: [
+    { icon: 'edit_square', label: 'Compose' },
+    { icon: 'inbox', label: 'Inbox', active: true, badge: '12' },
+    { icon: 'star', label: 'Starred' },
+    { icon: 'schedule_send', label: 'Snoozed' },
+    { icon: 'send', label: 'Sent' },
+    { icon: 'draft', label: 'Drafts', badge: '2' },
+    { icon: 'archive', label: 'Archive' },
+    { section: 'Labels' },
+    { icon: 'label', label: 'Exam ops' },
+    { icon: 'label', label: 'Assessor panel' },
+    { icon: 'label', label: 'Vendors' },
+  ],
+});
+</script>
+
+<main class="a-main"><div class="a-main__inner" style="max-width:none">
+
+  <div class="mail">
+    <section class="a-card" style="padding:var(--space-4)">
+      <div class="a-row a-row--between" style="padding:0 var(--space-2) var(--space-3)">
+        <span class="a-subhead">Inbox</span>
+        <div class="a-row" style="gap:4px">
+          <button class="a-icon-btn" aria-label="Refresh"><span class="a-icon a-icon--sm">refresh</span></button>
+          <button class="a-icon-btn" aria-label="Filter"><span class="a-icon a-icon--sm">filter_list</span></button>
+        </div>
+      </div>
+
+      <div class="msg msg--unread">
+        <span class="a-avatar">LM</span>
+        <span class="msg__body">
+          <span class="a-row a-row--between"><span class="msg__from">Leila Mansour</span><span class="msg__time">9:41 AM</span></span>
+          <span class="msg__subject">Station 6 rubric — final wording</span>
+          <span class="msg__preview">I folded in the panel's edits. One open question on the global rating anchor…</span>
+        </span>
+      </div>
+      <div class="msg msg--open">
+        <span class="a-avatar" style="background:#DCE9CF;color:#2F4A12">JM</span>
+        <span class="msg__body">
+          <span class="a-row a-row--between"><span class="msg__from">Jordan Mistry</span><span class="msg__time">9:12 AM</span></span>
+          <span class="msg__subject">Fall sitting — assessor confirmations</span>
+          <span class="msg__preview">28 of 30 confirmed. Two pending travel approval, details below.</span>
+        </span>
+      </div>
+      <div class="msg msg--unread">
+        <span class="a-avatar" style="background:#E7DFF4;color:#4B3A72">SP</span>
+        <span class="msg__body">
+          <span class="a-row a-row--between"><span class="msg__from">SecureShare</span><span class="msg__time">8:55 AM</span></span>
+          <span class="msg__subject">A file was shared with you: “Q3-rater-report.pdf”</span>
+          <span class="msg__preview">Nadia Haddad shared a protected file. Link expires in 7 days.</span>
+        </span>
+      </div>
+      <div class="msg">
+        <span class="a-avatar">RD</span>
+        <span class="msg__body">
+          <span class="a-row a-row--between"><span class="msg__from">Rosa Dela Cruz</span><span class="msg__time">Yesterday</span></span>
+          <span class="msg__subject">Re: CELBAN writing re-take — accommodation</span>
+          <span class="msg__preview">Thank you! I've uploaded the updated documentation to my portal.</span>
+        </span>
+      </div>
+      <div class="msg">
+        <span class="a-avatar" style="background:#F4E3CF;color:#7A4B12">CN</span>
+        <span class="msg__body">
+          <span class="a-row a-row--between"><span class="msg__from">Connect</span><span class="msg__time">Yesterday</span></span>
+          <span class="msg__subject">Recording ready: Standard-setting panel — day 2</span>
+          <span class="msg__preview">Your recording and transcript are available for 90 days.</span>
+        </span>
+      </div>
+    </section>
+
+    <section class="a-card">
+      <div class="a-row a-row--between a-mb-4">
+        <h1 class="a-heading" style="font:var(--a-type-heading)">Fall sitting — assessor confirmations</h1>
+        <div class="a-row" style="gap:4px">
+          <button class="a-icon-btn" aria-label="Archive"><span class="a-icon a-icon--sm">archive</span></button>
+          <button class="a-icon-btn" aria-label="Delete"><span class="a-icon a-icon--sm">delete</span></button>
+          <button class="a-icon-btn" aria-label="Snooze"><span class="a-icon a-icon--sm">schedule</span></button>
+          <button class="a-icon-btn" aria-label="More"><span class="a-icon a-icon--sm">more_vert</span></button>
+        </div>
+      </div>
+      <div class="a-row a-mb-4" style="gap:var(--space-3)">
+        <span class="a-avatar">JM</span>
+        <span style="flex:1"><span class="a-list__title">Jordan Mistry</span> <span class="a-caption">&lt;j.mistry@tsin.ca&gt;</span><br>
+          <span class="a-list__meta">to Exam Operations · 9:12 AM</span></span>
+        <span class="a-chip"><span class="a-icon">label</span>Exam ops</span>
+      </div>
+
+      <div class="a-body" style="max-width:640px">
+        <p>Morning all,</p>
+        <p class="a-mt-2">Quick status ahead of Thursday's briefing:</p>
+        <p class="a-mt-2"><strong>28 of 30 assessors confirmed</strong> for the fall OSCE sitting.
+        The remaining two are pending travel approval — I expect both by Friday.</p>
+        <p class="a-mt-2">Room assignments and the circuit map are in SecureShare
+        (link below). Please flag conflicts before Monday.</p>
+        <p class="a-mt-2">— Jordan</p>
+      </div>
+
+      <div class="a-row a-mt-4" style="gap:var(--space-3)">
+        <span class="a-chip"><span class="a-icon">attach_file</span>circuit-map-fall.pdf · 1.2 MB</span>
+        <span class="a-chip"><span class="a-icon">lock</span>SecureShare: room-assignments</span>
+      </div>
+
+      <hr class="a-divider" style="margin-top:var(--space-5)">
+      <div class="a-row" style="gap:var(--space-3)">
+        <button class="a-btn a-btn--filled"><span class="a-icon">reply</span>Reply</button>
+        <button class="a-btn a-btn--outlined"><span class="a-icon">reply_all</span>Reply all</button>
+        <button class="a-btn a-btn--outlined"><span class="a-icon">forward</span>Forward</button>
+      </div>
+    </section>
+  </div>
+
+</div>
+<script>renderFooter()</script>
+</main>
+</body>
+</html>

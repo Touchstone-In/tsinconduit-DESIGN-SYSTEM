@@ -1,0 +1,35 @@
+/** One item in an {@link AssayNavGroup} — a single rail destination. */
+export interface AssayNavItem {
+  label: string;
+  icon: string;
+  /** Router path passed straight to `routerLink`. Use this OR `href`, not both. */
+  routerLink?: string | string[];
+  /** Plain `href` for hosts not using Angular Router for this link. */
+  href?: string;
+  /** Matches `routerLinkActiveOptions.exact` — set true for a group's own index route. */
+  exact?: boolean;
+  /** Small numeric/text badge rendered at the trailing edge of the item. */
+  badge?: string | number;
+}
+
+/**
+ * A section of the rail. Groups with a `label` render an `a-rail__section` header above
+ * their items; omit `label` for a short nav with no section grouping (matching the Assay
+ * reference mockups that have no headers at all, e.g. Connect, Insights). There is
+ * deliberately no collapse/accordion behaviour — no Assay reference mockup has one; a host
+ * app with a very deep nav should split it into more sections rather than nest a group.
+ */
+export interface AssayNavGroup {
+  label?: string;
+  items: AssayNavItem[];
+}
+
+/** One extra action in the account-menu dropdown, below the identity block and above
+ *  Sign out (e.g. "My profile", "Account settings") — provide only entries with a real
+ *  destination; the library does not fabricate any on your behalf. */
+export interface AssayAccountMenuItem {
+  label: string;
+  icon: string;
+  routerLink?: string | string[];
+  href?: string;
+}

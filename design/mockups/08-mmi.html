@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MMI — Interview day</title>
+<link rel="stylesheet" href="../../projects/assay-ui/styles/tokens.css">
+<link rel="stylesheet" href="../../projects/assay-ui/styles/toolkit.css">
+<style>
+  .stage {
+    border-radius: var(--a-radius-card); overflow: hidden; position: relative;
+    background: linear-gradient(150deg, #0C2233 0%, #123A57 60%, #0E4B61 100%);
+    aspect-ratio: 16 / 8; display: grid; place-items: center;
+  }
+  .stage__badge { position: absolute; top: 16px; left: 16px; }
+  .stage__timer { position: absolute; top: 16px; right: 16px; background: rgba(0,0,0,.35);
+    color: #fff; border-radius: var(--a-radius-pill); padding: 6px 14px; font: var(--a-type-body-sm);
+    font-variant-numeric: tabular-nums; display: flex; gap: 8px; align-items: center; }
+  .stage__controls { position: absolute; bottom: 16px; left: 0; right: 0; display: flex; justify-content: center; gap: var(--space-3); }
+  .ctl { width: 48px; height: 48px; border-radius: 50%; border: 0; display: grid; place-items: center;
+    background: rgba(255,255,255,.14); color: #fff; cursor: pointer; }
+  .ctl--danger { background: var(--a-error); }
+  .stage__center { text-align: center; color: #C9DAE4; }
+</style>
+<script src="shell.js"></script>
+</head>
+<body class="a-shell">
+<script>
+renderShell({
+  service: 'MMI',
+  pageContext: 'Interview day — Circuit B',
+  searchScope: 'MMI',
+  user: { name: 'Wei-Lin Chen', role: 'Candidate', initials: 'WC' },
+  nav: [
+    { icon: 'home', label: 'Overview' },
+    { icon: 'co_present', label: 'Interview day', active: true },
+    { icon: 'calendar_month', label: 'My schedule' },
+    { icon: 'devices', label: 'Tech check' },
+    { section: 'Help' },
+    { icon: 'menu_book', label: 'Format guide' },
+    { icon: 'support_agent', label: 'Live support' },
+  ],
+});
+</script>
+
+<main class="a-main"><div class="a-main__inner">
+
+  <div class="a-page-head">
+    <div class="a-page-head__row">
+      <div>
+        <h1 class="a-title">Multiple Mini Interview — Circuit B</h1>
+        <p class="a-page-head__sub">10 stations · 8 minutes each · 2-minute reading period between stations</p>
+      </div>
+      <div class="a-page-head__actions">
+        <span class="a-badge a-badge--success" style="height:32px">Connection excellent</span>
+      </div>
+    </div>
+    <span class="a-current-bar"></span>
+  </div>
+
+  <div class="a-grid a-grid--main-side">
+    <section>
+      <div class="stage">
+        <span class="stage__badge a-badge a-badge--error" style="background:rgba(198,40,40,.9);color:#fff">Recording</span>
+        <div class="stage__timer"><span class="a-icon a-icon--sm">timer</span>05:42 remaining</div>
+        <div class="stage__center">
+          <span class="a-avatar a-avatar--lg" style="width:88px;height:88px;font:600 1.6rem var(--a-font);background:#1E425E;color:#fff">MK</span>
+          <div class="a-mt-2" style="font:var(--a-type-subhead);color:#fff">Dr. Maya Krishnan</div>
+          <div class="a-caption" style="color:#8AA5B5">Station 6 interviewer · Ethics scenario</div>
+        </div>
+        <div class="stage__controls">
+          <button class="ctl" aria-label="Microphone"><span class="a-icon">mic</span></button>
+          <button class="ctl" aria-label="Camera"><span class="a-icon">videocam</span></button>
+          <button class="ctl" aria-label="Captions"><span class="a-icon">closed_caption</span></button>
+          <button class="ctl ctl--danger" aria-label="Leave station"><span class="a-icon">call_end</span></button>
+        </div>
+      </div>
+
+      <section class="a-card a-mt-4">
+        <div class="a-card__head"><h2 class="a-subhead">Station 6 prompt</h2><span class="a-caption">Shown at start of reading period</span></div>
+        <p class="a-body">
+          A colleague asks you to cover a documentation gap from a night shift.
+          Discuss how you would respond, what factors you would weigh, and what
+          this situation says about safe team culture.
+        </p>
+      </section>
+    </section>
+
+    <div class="a-stack" style="gap:var(--a-gutter)">
+      <section class="a-card">
+        <div class="a-card__head"><h2 class="a-subhead">Circuit progress</h2><span class="a-caption">Station 6 of 10</span></div>
+        <div class="a-progress a-mb-4"><span class="a-progress__fill" style="width:60%"></span></div>
+        <div class="a-list">
+          <div class="a-list__row" style="padding:var(--space-2)">
+            <span class="a-icon a-icon--sm" style="color:var(--a-success)">check_circle</span>
+            <span class="a-list__body"><span class="a-list__title">5 · Collaboration scenario</span><br><span class="a-list__meta">Completed 10:42 AM</span></span>
+          </div>
+          <div class="a-list__row" style="padding:var(--space-2);background:var(--a-teal-wash);border-radius:10px">
+            <span class="a-icon a-icon--sm" style="color:var(--a-teal)">radio_button_checked</span>
+            <span class="a-list__body"><span class="a-list__title">6 · Ethics scenario</span><br><span class="a-list__meta">In progress · Dr. Krishnan</span></span>
+          </div>
+          <div class="a-list__row" style="padding:var(--space-2)">
+            <span class="a-icon a-icon--sm" style="color:var(--a-ink-muted)">schedule</span>
+            <span class="a-list__body"><span class="a-list__title">7 · Rest station</span><br><span class="a-list__meta">8-minute break</span></span>
+          </div>
+          <div class="a-list__row" style="padding:var(--space-2)">
+            <span class="a-icon a-icon--sm" style="color:var(--a-ink-muted)">schedule</span>
+            <span class="a-list__body"><span class="a-list__title">8 · Communication scenario</span><br><span class="a-list__meta">Starts 11:10 AM</span></span>
+          </div>
+        </div>
+      </section>
+
+      <div class="a-banner a-banner--info">
+        <span class="a-icon">tips_and_updates</span>
+        <span class="a-banner__body"><span class="a-banner__title">Reminder</span><br>
+          The next prompt appears automatically when the rotation bell sounds.
+          You never need to refresh.</span>
+      </div>
+
+      <section class="a-card">
+        <h2 class="a-subhead a-mb-4">Need help right now?</h2>
+        <button class="a-btn a-btn--outlined" style="width:100%"><span class="a-icon">support_agent</span>Reach the proctor desk</button>
+      </section>
+    </div>
+  </div>
+
+</div>
+<script>renderFooter()</script>
+</main>
+</body>
+</html>

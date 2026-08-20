@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SecureShare — Shared with me</title>
+<link rel="stylesheet" href="../../projects/assay-ui/styles/tokens.css">
+<link rel="stylesheet" href="../../projects/assay-ui/styles/toolkit.css">
+<style>
+  .a-table th:first-child { width: 38%; }
+  .a-table__primary { white-space: nowrap; }
+</style>
+<script src="shell.js"></script>
+</head>
+<body class="a-shell">
+<script>
+renderShell({
+  service: 'SecureShare',
+  pageContext: 'Shared with me',
+  searchScope: 'protected files',
+  nav: [
+    { icon: 'home', label: 'Home' },
+    { icon: 'folder_shared', label: 'Shared with me', active: true, badge: '3' },
+    { icon: 'outbox', label: 'Shared by me' },
+    { icon: 'schedule', label: 'Expiring soon' },
+    { icon: 'history', label: 'Access log' },
+    { section: 'Governance' },
+    { icon: 'policy', label: 'Sharing policies' },
+    { icon: 'shield_person', label: 'Trusted recipients' },
+  ],
+});
+</script>
+
+<main class="a-main"><div class="a-main__inner">
+
+  <div class="a-page-head">
+    <div class="a-page-head__row">
+      <div>
+        <h1 class="a-title">Shared with me</h1>
+        <p class="a-page-head__sub">Every file is encrypted, watermarked and access-logged</p>
+      </div>
+      <div class="a-page-head__actions">
+        <button class="a-btn a-btn--filled"><span class="a-icon">add</span>Share securely</button>
+      </div>
+    </div>
+    <span class="a-current-bar"></span>
+  </div>
+
+  <div class="a-banner a-banner--info a-mb-4">
+    <span class="a-icon">encrypted</span>
+    <span class="a-banner__body"><span class="a-banner__title">Protected workspace</span><br>
+      Downloads are watermarked with your name and logged. Links expire automatically
+      and can be revoked at any time by the owner.</span>
+  </div>
+
+  <div class="a-grid a-grid--main-side">
+    <section class="a-card">
+      <div class="a-card__head">
+        <h2 class="a-heading">Files</h2>
+        <div class="a-row" style="gap:8px">
+          <span class="a-chip a-chip--selected">All</span>
+          <span class="a-chip">Needs action</span>
+          <span class="a-chip">Expiring</span>
+        </div>
+      </div>
+      <table class="a-table">
+        <thead><tr><th>File</th><th>From</th><th>Access</th><th>Expires</th><th></th></tr></thead>
+        <tbody>
+          <tr>
+            <td>
+              <div class="a-row" style="gap:10px"><span class="a-list__glyph" style="width:36px;height:36px"><span class="a-icon a-icon--sm">picture_as_pdf</span></span>
+              <span><span class="a-table__primary">Q3-rater-report.pdf</span><br><span class="a-caption">4.8 MB · watermark on open</span></span></div>
+            </td>
+            <td>Nadia Haddad</td>
+            <td><span class="a-badge a-badge--info">View only</span></td>
+            <td>in 7 days</td>
+            <td><button class="a-btn a-btn--tonal a-btn--sm">Open</button></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="a-row" style="gap:10px"><span class="a-list__glyph" style="width:36px;height:36px"><span class="a-icon a-icon--sm">table</span></span>
+              <span><span class="a-table__primary">room-assignments-fall.xlsx</span><br><span class="a-caption">312 KB</span></span></div>
+            </td>
+            <td>Jordan Mistry</td>
+            <td><span class="a-badge a-badge--success">Can download</span></td>
+            <td>in 14 days</td>
+            <td><button class="a-btn a-btn--tonal a-btn--sm">Open</button></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="a-row" style="gap:10px"><span class="a-list__glyph" style="width:36px;height:36px"><span class="a-icon a-icon--sm">folder_zip</span></span>
+              <span><span class="a-table__primary">station-media-pack.zip</span><br><span class="a-caption">1.9 GB · 42 items</span></span></div>
+            </td>
+            <td>Exam Operations</td>
+            <td><span class="a-badge a-badge--success">Can download</span></td>
+            <td><span style="color:var(--a-warning);font-weight:600">tomorrow</span></td>
+            <td><button class="a-btn a-btn--tonal a-btn--sm">Open</button></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="a-row" style="gap:10px"><span class="a-list__glyph" style="width:36px;height:36px"><span class="a-icon a-icon--sm">picture_as_pdf</span></span>
+              <span><span class="a-table__primary">candidate-appeals-2026.pdf</span><br><span class="a-caption">requires re-authentication</span></span></div>
+            </td>
+            <td>Governance Office</td>
+            <td><span class="a-badge a-badge--warning">Approval pending</span></td>
+            <td>—</td>
+            <td><button class="a-btn a-btn--outlined a-btn--sm">Request</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <div class="a-stack" style="gap:var(--a-gutter)">
+      <section class="a-card">
+        <div class="a-card__head"><h2 class="a-subhead">Recent access activity</h2>
+          <a href="#" class="a-caption">Full log</a></div>
+        <div class="a-stack" style="gap:var(--space-4)">
+          <div class="a-row">
+            <span class="a-icon a-icon--sm" style="color:var(--a-success)">visibility</span>
+            <span class="a-body-sm">You viewed <strong>Q3-rater-report.pdf</strong><br>
+              <span class="a-caption">Today 9:02 AM · Toronto, CA · Chrome</span></span>
+          </div>
+          <div class="a-row">
+            <span class="a-icon a-icon--sm" style="color:var(--a-success)">download</span>
+            <span class="a-body-sm">You downloaded <strong>room-assignments-fall.xlsx</strong><br>
+              <span class="a-caption">Yesterday 4:18 PM · watermarked copy</span></span>
+          </div>
+          <div class="a-row">
+            <span class="a-icon a-icon--sm" style="color:var(--a-error)">block</span>
+            <span class="a-body-sm">Blocked: forwarded link used by unknown account<br>
+              <span class="a-caption">Aug 16 · owner notified automatically</span></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="a-card">
+        <h2 class="a-subhead a-mb-4">Expiring soon</h2>
+        <div class="a-row a-row--between a-mb-4">
+          <span class="a-body-sm">station-media-pack.zip</span>
+          <span class="a-badge a-badge--warning">24 h</span>
+        </div>
+        <button class="a-btn a-btn--outlined" style="width:100%"><span class="a-icon">history</span>Request extension</button>
+      </section>
+    </div>
+  </div>
+
+</div>
+<script>renderFooter()</script>
+</main>
+</body>
+</html>

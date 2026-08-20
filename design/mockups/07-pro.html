@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PRO — Candidate journey</title>
+<link rel="stylesheet" href="../../projects/assay-ui/styles/tokens.css">
+<link rel="stylesheet" href="../../projects/assay-ui/styles/toolkit.css">
+<style>
+  .timeline { position: relative; padding-left: 28px; }
+  .timeline::before { content: ''; position: absolute; left: 9px; top: 8px; bottom: 8px; width: 2px; background: var(--a-border-subtle); }
+  .tl-item { position: relative; padding-bottom: var(--space-5); }
+  .tl-item:last-child { padding-bottom: 0; }
+  .tl-item__dot { position: absolute; left: -28px; top: 2px; width: 20px; height: 20px; border-radius: 50%;
+    display: grid; place-items: center; background: var(--a-surface-sunken); color: var(--a-ink-muted); }
+  .tl-item--done .tl-item__dot { background: var(--a-teal); color: #fff; }
+  .tl-item--current .tl-item__dot { background: var(--a-teal-light); color: var(--a-ink); box-shadow: 0 0 0 3px rgba(2,129,160,.25); }
+  .tl-item .a-icon { font-size: 12px; }
+</style>
+<script src="shell.js"></script>
+</head>
+<body class="a-shell">
+<script>
+renderShell({
+  service: 'PRO',
+  pageContext: 'Candidate journey',
+  searchScope: 'PRO',
+  user: { name: 'Daniel Adeyemi', role: 'PRO Candidate', initials: 'DA' },
+  nav: [
+    { icon: 'home', label: 'My journey', active: true },
+    { icon: 'checklist', label: 'Eligibility' },
+    { icon: 'stethoscope', label: 'Clinical assessment' },
+    { icon: 'rate_review', label: 'Evaluations' },
+    { icon: 'upload_file', label: 'Documents' },
+    { section: 'Resources' },
+    { icon: 'menu_book', label: 'Candidate handbook' },
+    { icon: 'support_agent', label: 'Contact program' },
+  ],
+});
+</script>
+
+<main class="a-main"><div class="a-main__inner">
+
+  <div class="a-page-head">
+    <div class="a-page-head__row">
+      <div>
+        <h1 class="a-title">Your Practice Ready pathway</h1>
+        <p class="a-page-head__sub">Family Medicine stream · 2026 spring cohort · Candidate PRO-26-0417</p>
+      </div>
+      <div class="a-page-head__actions">
+        <span class="a-badge a-badge--info" style="height:32px">Clinical Field Assessment underway</span>
+      </div>
+    </div>
+    <span class="a-current-bar"></span>
+  </div>
+
+  <div class="a-grid a-grid--4 a-mb-4" style="gap:var(--space-4)">
+    <div class="a-card a-card--flat a-stat">
+      <span class="a-stat__label">Weeks completed</span>
+      <span class="a-stat__value">8 <span class="a-caption" style="font:var(--a-type-body-sm)">of 12</span></span>
+      <span class="a-stat__delta a-stat__delta--up"><span class="a-icon">trending_up</span>On schedule</span>
+    </div>
+    <div class="a-card a-card--flat a-stat">
+      <span class="a-stat__label">Field notes submitted</span>
+      <span class="a-stat__value">64</span>
+      <span class="a-caption">by your assessor</span>
+    </div>
+    <div class="a-card a-card--flat a-stat">
+      <span class="a-stat__label">Evaluations complete</span>
+      <span class="a-stat__value">2 <span class="a-caption" style="font:var(--a-type-body-sm)">of 3</span></span>
+      <span class="a-caption">midpoint review passed</span>
+    </div>
+    <div class="a-card a-card--flat a-stat">
+      <span class="a-stat__label">Outstanding items</span>
+      <span class="a-stat__value">1</span>
+      <span class="a-stat__delta a-stat__delta--down"><span class="a-icon">priority_high</span>Action needed</span>
+    </div>
+  </div>
+
+  <div class="a-grid a-grid--main-side">
+    <section class="a-card">
+      <div class="a-card__head"><h2 class="a-heading">Assessment timeline</h2></div>
+      <div class="timeline">
+        <div class="tl-item tl-item--done">
+          <span class="tl-item__dot"><span class="a-icon">check</span></span>
+          <div class="a-list__title">Eligibility confirmed</div>
+          <div class="a-list__meta">Credentials, licensure exam history and references verified · Feb 12</div>
+        </div>
+        <div class="tl-item tl-item--done">
+          <span class="tl-item__dot"><span class="a-icon">check</span></span>
+          <div class="a-list__title">Orientation &amp; pre-assessment learning</div>
+          <div class="a-list__meta">4 modules in Campus · completed Mar 30</div>
+        </div>
+        <div class="tl-item tl-item--done">
+          <span class="tl-item__dot"><span class="a-icon">check</span></span>
+          <div class="a-list__title">Placement matched — Sunrise Family Health Team</div>
+          <div class="a-list__meta">Supervising assessor: Dr. Priya Raman · Barrie, ON</div>
+        </div>
+        <div class="tl-item tl-item--current">
+          <span class="tl-item__dot">4</span>
+          <div class="a-list__title">12-week Clinical Field Assessment</div>
+          <div class="a-list__meta">Week 8 of 12 · midpoint evaluation passed · final evaluation opens Sep 8</div>
+          <div class="a-mt-2" style="max-width:420px">
+            <div class="a-progress"><span class="a-progress__fill" style="width:67%"></span></div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <span class="tl-item__dot">5</span>
+          <div class="a-list__title">Final evaluation &amp; program recommendation</div>
+          <div class="a-list__meta">Panel review · recommendation to the College</div>
+        </div>
+        <div class="tl-item">
+          <span class="tl-item__dot">6</span>
+          <div class="a-list__title">Transition to independent practice</div>
+          <div class="a-list__meta">Restricted certificate · return-of-service placement</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="a-stack" style="gap:var(--a-gutter)">
+      <div class="a-banner a-banner--warning">
+        <span class="a-icon">assignment_late</span>
+        <span class="a-banner__body"><span class="a-banner__title">Week 8 self-reflection due</span><br>
+          Submit before Friday so Dr. Raman can include it in the next field note.
+          <br><button class="a-btn a-btn--tonal a-btn--sm a-mt-2">Start reflection</button></span>
+      </div>
+
+      <section class="a-card">
+        <h2 class="a-subhead a-mb-4">Recent evaluations</h2>
+        <div class="a-list">
+          <div class="a-list__row" style="padding:var(--space-3) var(--space-2)">
+            <span class="a-list__glyph"><span class="a-icon">rate_review</span></span>
+            <span class="a-list__body"><span class="a-list__title">Midpoint evaluation</span><br>
+              <span class="a-list__meta">Jul 18 · meets expectations in 9 of 10 domains</span></span>
+            <span class="a-badge a-badge--success">Passed</span>
+          </div>
+          <div class="a-list__row" style="padding:var(--space-3) var(--space-2)">
+            <span class="a-list__glyph"><span class="a-icon">rate_review</span></span>
+            <span class="a-list__body"><span class="a-list__title">Week 4 progress review</span><br>
+              <span class="a-list__meta">Jun 20 · communication flagged for growth</span></span>
+            <span class="a-badge a-badge--success">Complete</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="a-card">
+        <h2 class="a-subhead a-mb-4">Your program team</h2>
+        <div class="a-stack" style="gap:var(--space-4)">
+          <div class="a-row">
+            <span class="a-avatar">PR</span>
+            <span><span class="a-list__title">Dr. Priya Raman</span><br><span class="a-list__meta">Supervising assessor</span></span>
+            <button class="a-icon-btn" style="margin-left:auto" aria-label="Message"><span class="a-icon">chat</span></button>
+          </div>
+          <div class="a-row">
+            <span class="a-avatar">JM</span>
+            <span><span class="a-list__title">Jordan Mistry</span><br><span class="a-list__meta">Program coordinator</span></span>
+            <button class="a-icon-btn" style="margin-left:auto" aria-label="Message"><span class="a-icon">chat</span></button>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+</div>
+<script>renderFooter()</script>
+</main>
+</body>
+</html>

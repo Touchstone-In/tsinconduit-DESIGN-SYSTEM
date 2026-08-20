@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Exams — My assessments</title>
+<link rel="stylesheet" href="../../projects/assay-ui/styles/tokens.css">
+<link rel="stylesheet" href="../../projects/assay-ui/styles/toolkit.css">
+<style>
+  .exam-hero { display: flex; gap: var(--space-5); align-items: center; }
+  .exam-hero__timer {
+    flex: none; width: 132px; height: 132px; border-radius: 50%;
+    display: grid; place-items: center; text-align: center;
+    background:
+      conic-gradient(var(--a-teal) 0 76%, var(--a-border-subtle) 76% 100%);
+  }
+  .exam-hero__timer-inner {
+    width: 108px; height: 108px; border-radius: 50%; background: var(--a-surface);
+    display: grid; place-items: center; align-content: center; gap: 2px;
+  }
+</style>
+<script src="shell.js"></script>
+</head>
+<body class="a-shell">
+<script>
+renderShell({
+  service: 'Exams',
+  pageContext: 'My assessments',
+  searchScope: 'assessments',
+  user: { name: 'Daniel Adeyemi', role: 'Candidate', initials: 'DA' },
+  nav: [
+    { icon: 'home', label: 'Home' },
+    { icon: 'quiz', label: 'My assessments', active: true },
+    { icon: 'calendar_month', label: 'Bookings' },
+    { icon: 'grade', label: 'Results' },
+    { icon: 'devices', label: 'System check' },
+    { section: 'Support' },
+    { icon: 'accessibility_new', label: 'Accommodations' },
+    { icon: 'help', label: 'Exam rules' },
+  ],
+});
+</script>
+
+<main class="a-main"><div class="a-main__inner">
+
+  <div class="a-page-head">
+    <div class="a-page-head__row">
+      <div>
+        <h1 class="a-title">My assessments</h1>
+        <p class="a-page-head__sub">Candidate ID TS-284119 · accommodations approved</p>
+      </div>
+      <div class="a-page-head__actions">
+        <button class="a-btn a-btn--outlined"><span class="a-icon">devices</span>Run system check</button>
+      </div>
+    </div>
+    <span class="a-current-bar"></span>
+  </div>
+
+  <section class="a-card a-mb-4" style="border-left:4px solid var(--a-teal)">
+    <div class="exam-hero">
+      <div class="exam-hero__timer" role="img" aria-label="9 days until exam">
+        <div class="exam-hero__timer-inner">
+          <span class="a-title" style="font-variant-numeric:tabular-nums">9</span>
+          <span class="a-caption">days to go</span>
+        </div>
+      </div>
+      <div style="flex:1">
+        <div class="a-row" style="gap:8px">
+          <span class="a-overline">Next assessment</span>
+          <span class="a-badge a-badge--success">Confirmed</span>
+        </div>
+        <h2 class="a-heading" style="margin-top:6px">Objective Structured Clinical Examination — Fall sitting</h2>
+        <div class="a-row a-mt-2" style="gap:var(--space-5);flex-wrap:wrap">
+          <span class="a-row" style="gap:6px"><span class="a-icon a-icon--sm" style="color:var(--a-ink-muted)">event</span><span class="a-body-sm">Thu, Aug 28 · 8:30 AM EDT</span></span>
+          <span class="a-row" style="gap:6px"><span class="a-icon a-icon--sm" style="color:var(--a-ink-muted)">location_on</span><span class="a-body-sm">Touchstone Institute, 145 Wellington St W, Toronto</span></span>
+          <span class="a-row" style="gap:6px"><span class="a-icon a-icon--sm" style="color:var(--a-ink-muted)">timer</span><span class="a-body-sm">10 stations · ~3.5 hours</span></span>
+        </div>
+      </div>
+      <div class="a-stack" style="gap:var(--space-3)">
+        <button class="a-btn a-btn--filled"><span class="a-icon">badge</span>View admission letter</button>
+        <button class="a-btn a-btn--ghost">What to bring</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="a-grid a-grid--main-side">
+    <section class="a-card">
+      <div class="a-card__head">
+        <h2 class="a-heading">Results</h2>
+        <span class="a-chip"><span class="a-icon">filter_list</span>All years</span>
+      </div>
+      <table class="a-table a-table--num">
+        <thead><tr><th>Assessment</th><th>Date</th><th>Score</th><th>Status</th><th></th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="a-table__primary">Therapeutics Decision-Making Exam</td>
+            <td>Jun 14, 2026</td><td>412 / 500</td>
+            <td><span class="a-badge a-badge--success">Pass</span></td>
+            <td><button class="a-btn a-btn--ghost a-btn--sm"><span class="a-icon">download</span>Report</button></td>
+          </tr>
+          <tr>
+            <td class="a-table__primary">Clinical Knowledge Written Exam</td>
+            <td>Mar 22, 2026</td><td>388 / 500</td>
+            <td><span class="a-badge a-badge--success">Pass</span></td>
+            <td><button class="a-btn a-btn--ghost a-btn--sm"><span class="a-icon">download</span>Report</button></td>
+          </tr>
+          <tr>
+            <td class="a-table__primary">Practice Simulation — Pilot</td>
+            <td>Jan 10, 2026</td><td>—</td>
+            <td><span class="a-badge a-badge--neutral">Ungraded pilot</span></td>
+            <td><button class="a-btn a-btn--ghost a-btn--sm"><span class="a-icon">visibility</span>View</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <div class="a-stack" style="gap:var(--a-gutter)">
+      <section class="a-card">
+        <h2 class="a-subhead a-mb-4">Exam-day checklist</h2>
+        <div class="a-stack">
+          <div class="a-row" style="gap:10px"><span class="a-icon a-icon--sm" style="color:var(--a-success)">check_circle</span><span class="a-body-sm">Identity documents verified</span></div>
+          <div class="a-row" style="gap:10px"><span class="a-icon a-icon--sm" style="color:var(--a-success)">check_circle</span><span class="a-body-sm">Accommodation plan confirmed</span></div>
+          <div class="a-row" style="gap:10px"><span class="a-icon a-icon--sm" style="color:var(--a-warning)">radio_button_unchecked</span><span class="a-body-sm">System check on exam device</span></div>
+          <div class="a-row" style="gap:10px"><span class="a-icon a-icon--sm" style="color:var(--a-warning)">radio_button_unchecked</span><span class="a-body-sm">Review station rules &amp; breaks</span></div>
+        </div>
+      </section>
+
+      <div class="a-banner a-banner--warning">
+        <span class="a-icon">schedule</span>
+        <span class="a-banner__body"><span class="a-banner__title">Reschedule window closes Aug 21</span><br>
+          Changes after this date require a documented absence.</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+<script>renderFooter()</script>
+</main>
+</body>
+</html>

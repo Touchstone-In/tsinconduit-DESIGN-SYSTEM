@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Campus — Course</title>
+<link rel="stylesheet" href="../../projects/assay-ui/styles/tokens.css">
+<link rel="stylesheet" href="../../projects/assay-ui/styles/toolkit.css">
+<script src="shell.js"></script>
+</head>
+<body class="a-shell">
+<script>
+renderShell({
+  service: 'Campus',
+  pageContext: 'OSCE Station Design',
+  searchScope: 'courses',
+  nav: [
+    { icon: 'home', label: 'Home' },
+    { icon: 'school', label: 'My courses', active: true },
+    { icon: 'calendar_month', label: 'Schedule' },
+    { icon: 'grade', label: 'Grades' },
+    { icon: 'forum', label: 'Discussions', badge: '2' },
+    { section: 'Teaching' },
+    { icon: 'edit_square', label: 'Course builder' },
+    { icon: 'group', label: 'Cohorts' },
+  ],
+});
+</script>
+
+<main class="a-main"><div class="a-main__inner">
+
+  <nav class="a-breadcrumbs" aria-label="Breadcrumb">
+    <a href="#">My courses</a><span class="a-icon">chevron_right</span>
+    <span aria-current="page">OSCE Station Design</span>
+  </nav>
+
+  <div class="a-page-head">
+    <div class="a-page-head__row">
+      <div>
+        <h1 class="a-title">OSCE Station Design for Clinical Examiners</h1>
+        <p class="a-page-head__sub">Fall 2026 · Facilitated by Dr. Leila Mansour · 6 modules · 42 enrolled</p>
+      </div>
+      <div class="a-page-head__actions">
+        <button class="a-btn a-btn--outlined"><span class="a-icon">videocam</span>Join live session</button>
+        <button class="a-btn a-btn--filled"><span class="a-icon">play_circle</span>Resume module 4</button>
+      </div>
+    </div>
+    <span class="a-current-bar"></span>
+  </div>
+
+  <div class="a-tabs" role="tablist">
+    <button class="a-tab" role="tab" aria-selected="true">Overview</button>
+    <button class="a-tab" role="tab">Modules</button>
+    <button class="a-tab" role="tab">Assignments</button>
+    <button class="a-tab" role="tab">Grades</button>
+    <button class="a-tab" role="tab">People</button>
+  </div>
+
+  <div class="a-grid a-grid--main-side">
+    <section class="a-card">
+      <div class="a-card__head">
+        <h2 class="a-heading">Modules</h2>
+        <span class="a-caption">4 of 6 complete</span>
+      </div>
+      <div class="a-list">
+        <div class="a-list__row">
+          <span class="a-list__glyph"><span class="a-icon">check_circle</span></span>
+          <span class="a-list__body"><span class="a-list__title">1 · Principles of performance assessment</span><br>
+            <span class="a-list__meta">Video · reading · quiz — completed Aug 2</span></span>
+          <span class="a-badge a-badge--success">Complete</span>
+        </div>
+        <div class="a-list__row">
+          <span class="a-list__glyph"><span class="a-icon">check_circle</span></span>
+          <span class="a-list__body"><span class="a-list__title">2 · Blueprinting a station</span><br>
+            <span class="a-list__meta">Workshop · template — completed Aug 6</span></span>
+          <span class="a-badge a-badge--success">Complete</span>
+        </div>
+        <div class="a-list__row">
+          <span class="a-list__glyph"><span class="a-icon">check_circle</span></span>
+          <span class="a-list__body"><span class="a-list__title">3 · Standardized patient scripting</span><br>
+            <span class="a-list__meta">Peer review — completed Aug 11</span></span>
+          <span class="a-badge a-badge--success">Complete</span>
+        </div>
+        <div class="a-list__row" style="background:var(--a-teal-wash)">
+          <span class="a-list__glyph" style="background:var(--a-teal-light)"><span class="a-icon">play_circle</span></span>
+          <span class="a-list__body"><span class="a-list__title">4 · Rating scales and global ratings</span><br>
+            <span class="a-list__meta">2 of 5 lessons watched · checkpoint quiz pending</span></span>
+          <span class="a-list__trail" style="width:140px"><span class="a-progress" style="flex:1"><span class="a-progress__fill" style="width:40%"></span></span></span>
+        </div>
+        <div class="a-list__row">
+          <span class="a-list__glyph"><span class="a-icon">lock</span></span>
+          <span class="a-list__body"><span class="a-list__title">5 · Piloting and standard setting</span><br>
+            <span class="a-list__meta">Opens when module 4 is complete</span></span>
+          <span class="a-badge a-badge--neutral">Locked</span>
+        </div>
+        <div class="a-list__row">
+          <span class="a-list__glyph"><span class="a-icon">workspace_premium</span></span>
+          <span class="a-list__body"><span class="a-list__title">6 · Capstone: run your station</span><br>
+            <span class="a-list__meta">Live OSCE simulation via Connect</span></span>
+          <span class="a-badge a-badge--neutral">Locked</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="a-stack" style="gap:var(--a-gutter)">
+      <section class="a-card">
+        <h2 class="a-subhead a-mb-4">Course progress</h2>
+        <div class="a-row a-row--between" style="margin-bottom:6px">
+          <span class="a-caption">Overall</span><span class="a-caption">67%</span>
+        </div>
+        <div class="a-progress"><span class="a-progress__fill" style="width:67%"></span></div>
+        <hr class="a-divider">
+        <div class="a-stack" style="gap:var(--space-2)">
+          <div class="a-row a-row--between"><span class="a-body-sm">Assignments submitted</span><span class="a-body-sm" style="font-weight:600;color:var(--a-ink)">5 / 6</span></div>
+          <div class="a-row a-row--between"><span class="a-body-sm">Quiz average</span><span class="a-body-sm" style="font-weight:600;color:var(--a-ink)">88%</span></div>
+          <div class="a-row a-row--between"><span class="a-body-sm">Live sessions attended</span><span class="a-body-sm" style="font-weight:600;color:var(--a-ink)">3 / 3</span></div>
+        </div>
+      </section>
+
+      <section class="a-card">
+        <h2 class="a-subhead a-mb-4">Up next</h2>
+        <div class="a-stack" style="gap:var(--space-4)">
+          <div class="a-row">
+            <span class="a-list__glyph"><span class="a-icon">event</span></span>
+            <span><span class="a-list__title">Live workshop — rating calibration</span><br>
+              <span class="a-list__meta">Thu Aug 21 · 1:00–2:30 PM · Connect</span></span>
+          </div>
+          <div class="a-row">
+            <span class="a-list__glyph"><span class="a-icon">assignment</span></span>
+            <span><span class="a-list__title">Checkpoint quiz — module 4</span><br>
+              <span class="a-list__meta">Due Fri Aug 22 · 20 min</span></span>
+          </div>
+        </div>
+      </section>
+
+      <div class="a-banner a-banner--info">
+        <span class="a-icon">info</span>
+        <span class="a-banner__body"><span class="a-banner__title">Cohort notice</span><br>
+          Module 5 opens for everyone on Sep 2 regardless of progress.</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+<script>renderFooter()</script>
+</main>
+</body>
+</html>

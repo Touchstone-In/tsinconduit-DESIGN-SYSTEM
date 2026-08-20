@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Insights — Suite overview</title>
+<link rel="stylesheet" href="../../projects/assay-ui/styles/tokens.css">
+<link rel="stylesheet" href="../../projects/assay-ui/styles/toolkit.css">
+<style>
+  .legend { display: flex; gap: var(--space-4); font: var(--a-type-caption); color: var(--a-ink-body); }
+  .legend__key { display: inline-flex; align-items: center; gap: 6px; }
+  .legend__swatch { width: 10px; height: 10px; border-radius: 3px; }
+  .bars { display: flex; flex-direction: column; gap: var(--space-3); }
+  .bar-row { display: grid; grid-template-columns: 92px 1fr 48px; align-items: center; gap: var(--space-3); }
+  .bar-row__label { font: var(--a-type-caption); color: var(--a-ink-body); text-align: right; }
+  .bar-row__track { height: 20px; display: flex; align-items: center; }
+  .bar-row__fill { height: 20px; border-radius: 0 4px 4px 0; background: var(--a-viz-1); }
+  .bar-row__val { font: var(--a-type-caption); color: var(--a-ink); font-variant-numeric: tabular-nums; }
+</style>
+<script src="shell.js"></script>
+</head>
+<body class="a-shell">
+<script>
+renderShell({
+  service: 'Insights',
+  pageContext: 'Suite overview',
+  searchScope: 'metrics & reports',
+  nav: [
+    { icon: 'monitoring', label: 'Overview', active: true },
+    { icon: 'query_stats', label: 'Explore' },
+    { icon: 'description', label: 'Reports' },
+    { icon: 'notifications_active', label: 'Alerts', badge: '1' },
+    { section: 'Domains' },
+    { icon: 'quiz', label: 'Assessments' },
+    { icon: 'school', label: 'Learning' },
+    { icon: 'payments', label: 'Revenue' },
+    { icon: 'dataset', label: 'Data catalogue' },
+  ],
+});
+</script>
+
+<main class="a-main"><div class="a-main__inner">
+
+  <div class="a-page-head">
+    <div class="a-page-head__row">
+      <div>
+        <h1 class="a-title">Suite overview</h1>
+        <p class="a-page-head__sub">Across all Conduit services · data as of 6:00 AM today</p>
+      </div>
+      <div class="a-page-head__actions">
+        <span class="a-chip"><span class="a-icon">calendar_month</span>Last 6 months</span>
+        <button class="a-btn a-btn--outlined"><span class="a-icon">download</span>Export</button>
+      </div>
+    </div>
+    <span class="a-current-bar"></span>
+  </div>
+
+  <div class="a-grid a-grid--4 a-mb-4" style="gap:var(--space-4)">
+    <div class="a-card a-card--flat a-stat">
+      <span class="a-stat__label">Active candidates</span>
+      <span class="a-stat__value">4,218</span>
+      <span class="a-stat__delta a-stat__delta--up"><span class="a-icon">arrow_upward</span>+8.2% vs last quarter</span>
+    </div>
+    <div class="a-card a-card--flat a-stat">
+      <span class="a-stat__label">Assessments delivered</span>
+      <span class="a-stat__value">1,096</span>
+      <span class="a-stat__delta a-stat__delta--up"><span class="a-icon">arrow_upward</span>+4.6%</span>
+    </div>
+    <div class="a-card a-card--flat a-stat">
+      <span class="a-stat__label">Median time to result</span>
+      <span class="a-stat__value">6.4 d</span>
+      <span class="a-stat__delta a-stat__delta--up"><span class="a-icon">arrow_downward</span>−1.1 d (faster)</span>
+    </div>
+    <div class="a-card a-card--flat a-stat">
+      <span class="a-stat__label">First-attempt pass rate</span>
+      <span class="a-stat__value">78%</span>
+      <span class="a-stat__delta a-stat__delta--down"><span class="a-icon">arrow_downward</span>−1.9 pts</span>
+    </div>
+  </div>
+
+  <div class="a-grid a-grid--main-side">
+    <section class="a-card">
+      <div class="a-card__head">
+        <div>
+          <h2 class="a-heading">Candidate volume</h2>
+          <span class="a-caption">Monthly, March – August 2026</span>
+        </div>
+        <div class="legend">
+          <span class="legend__key"><span class="legend__swatch" style="background:var(--a-viz-1)"></span>Registrations</span>
+          <span class="legend__key"><span class="legend__swatch" style="background:var(--a-viz-2)"></span>Completions</span>
+        </div>
+      </div>
+      <svg viewBox="0 0 640 240" width="100%" role="img"
+           aria-label="Line chart: registrations grew from 480 in March to 742 in August; completions from 402 to 618">
+        <g stroke="var(--a-border-subtle)" stroke-width="1">
+          <line x1="40" y1="20"  x2="600" y2="20"/><line x1="40" y1="70" x2="600" y2="70"/>
+          <line x1="40" y1="120" x2="600" y2="120"/><line x1="40" y1="170" x2="600" y2="170"/>
+          <line x1="40" y1="200" x2="600" y2="200"/>
+        </g>
+        <g fill="var(--a-ink-muted)" font-family="IBM Plex Sans" font-size="11">
+          <text x="34" y="24" text-anchor="end">800</text>
+          <text x="34" y="124" text-anchor="end">400</text>
+          <text x="34" y="204" text-anchor="end">0</text>
+          <text x="60"  y="222">Mar</text><text x="160" y="222">Apr</text><text x="260" y="222">May</text>
+          <text x="360" y="222">Jun</text><text x="460" y="222">Jul</text><text x="560" y="222">Aug</text>
+        </g>
+        <polyline fill="none" stroke="var(--a-viz-1)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"
+          points="70,104 170,96 270,84 370,74 470,60 570,52"/>
+        <polyline fill="none" stroke="var(--a-viz-2)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"
+          points="70,120 170,116 270,108 370,96 470,86 570,76"/>
+        <g>
+          <circle cx="570" cy="52" r="4" fill="var(--a-viz-1)" stroke="var(--a-surface)" stroke-width="2"/>
+          <circle cx="570" cy="76" r="4" fill="var(--a-viz-2)" stroke="var(--a-surface)" stroke-width="2"/>
+        </g>
+        <g font-family="IBM Plex Sans" font-size="11" font-weight="600" fill="var(--a-ink)">
+          <text x="580" y="50">742</text>
+          <text x="580" y="84">618</text>
+        </g>
+      </svg>
+    </section>
+
+    <section class="a-card">
+      <div class="a-card__head">
+        <div>
+          <h2 class="a-heading">Delivered by service</h2>
+          <span class="a-caption">Q3 to date</span>
+        </div>
+      </div>
+      <div class="bars">
+        <div class="bar-row"><span class="bar-row__label">CELBAN</span>
+          <span class="bar-row__track"><span class="bar-row__fill" style="width:100%"></span></span>
+          <span class="bar-row__val">312</span></div>
+        <div class="bar-row"><span class="bar-row__label">Exams</span>
+          <span class="bar-row__track"><span class="bar-row__fill" style="width:86%"></span></span>
+          <span class="bar-row__val">268</span></div>
+        <div class="bar-row"><span class="bar-row__label">MMI</span>
+          <span class="bar-row__track"><span class="bar-row__fill" style="width:60%"></span></span>
+          <span class="bar-row__val">187</span></div>
+        <div class="bar-row"><span class="bar-row__label">PRO</span>
+          <span class="bar-row__track"><span class="bar-row__fill" style="width:41%"></span></span>
+          <span class="bar-row__val">129</span></div>
+        <div class="bar-row"><span class="bar-row__label">Campus</span>
+          <span class="bar-row__track"><span class="bar-row__fill" style="width:32%"></span></span>
+          <span class="bar-row__val">98</span></div>
+        <div class="bar-row"><span class="bar-row__label">Learning</span>
+          <span class="bar-row__track"><span class="bar-row__fill" style="width:33%"></span></span>
+          <span class="bar-row__val">102</span></div>
+      </div>
+      <hr class="a-divider">
+      <div class="a-banner a-banner--warning" style="padding:var(--space-3)">
+        <span class="a-icon">notifications_active</span>
+        <span class="a-banner__body"><span class="a-banner__title">Alert</span><br>
+          CELBAN writing re-take volume is 22% above forecast.</span>
+      </div>
+    </section>
+  </div>
+
+  <section class="a-card a-mt-5">
+    <div class="a-card__head">
+      <h2 class="a-heading">Service health</h2>
+      <span class="a-caption">Same data available as a table for every chart</span>
+    </div>
+    <table class="a-table a-table--num">
+      <thead><tr><th>Service</th><th>Volume (Q3)</th><th>Δ vs Q2</th><th>Median time to result</th><th>Satisfaction</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td class="a-table__primary">CELBAN</td><td>312</td><td style="color:var(--a-success)">+9.1%</td><td>5.2 d</td><td>4.6 / 5</td><td><span class="a-badge a-badge--success">Healthy</span></td></tr>
+        <tr><td class="a-table__primary">Exams</td><td>268</td><td style="color:var(--a-success)">+3.4%</td><td>7.0 d</td><td>4.4 / 5</td><td><span class="a-badge a-badge--success">Healthy</span></td></tr>
+        <tr><td class="a-table__primary">MMI</td><td>187</td><td style="color:var(--a-success)">+6.8%</td><td>4.1 d</td><td>4.5 / 5</td><td><span class="a-badge a-badge--success">Healthy</span></td></tr>
+        <tr><td class="a-table__primary">PRO</td><td>129</td><td style="color:var(--a-error)">−2.2%</td><td>11.3 d</td><td>4.2 / 5</td><td><span class="a-badge a-badge--warning">Watch</span></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+</div>
+<script>renderFooter()</script>
+</main>
+</body>
+</html>
