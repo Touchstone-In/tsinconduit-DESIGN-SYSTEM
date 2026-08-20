@@ -1,11 +1,14 @@
 #!/usr/bin/env bash
-# Builds projects/assay-ui and publishes it to the orphan `dist` branch, tagged
-# assay-ui-vX.Y.Z, so consuming services can install a specific version as a git-tag
-# dependency (see README.md). Run from the repo root.
+# Builds projects/assay-ui and publishes it to its own orphan branch, named
+# assay-ui-vX.Y.Z, so consuming services can install a specific version as a git-branch
+# dependency (see README.md). One branch per release (not a shared `dist` branch + tags):
+# this org's GitHub ruleset rejects tag pushes from this session's credentials, so versions
+# are addressed by branch name instead — same consumer-facing syntax either way
+# (github:...#<ref>), just a branch ref instead of a tag ref. Run from the repo root.
 set -euo pipefail
 
 VERSION="${1:?Usage: scripts/release.sh <version, e.g. 0.1.0>}"
-TAG="assay-ui-v${VERSION}"
+REF="assay-ui-v${VERSION}"
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$REPO_ROOT"
 
@@ -28,27 +31,23 @@ git diff --cached --quiet || git commit -m "assay-ui v${VERSION}"
 echo "==> Building assay-ui"
 npx --no-install ng build assay-ui
 
-echo "==> Publishing dist/assay-ui to the dist branch, tagged ${TAG}"
-git fetch origin dist 2>/dev/null || true
+echo "==> Publishing dist/assay-ui to the ${REF} branch"
+if git ls-remote --exit-code --heads origin "$REF" >/dev/null 2>&1; then
+  echo "error: branch ${REF} already exists on origin — versions are immutable, bump the version" >&2
+  exit 1
+fi
+
 WORKTREE="$(mktemp -d)"
 rmdir "$WORKTREE"
 trap 'git worktree remove "$WORKTREE" --force 2>/dev/null; rm -rf "$WORKTREE"' EXIT
 
-if git show-ref --verify --quiet refs/remotes/origin/dist; then
-  git worktree add -B dist "$WORKTREE" origin/dist
-else
-  git worktree add --orphan -b dist "$WORKTREE"
-fi
-
-rm -rf "${WORKTREE:?}"/*
+git worktree add --orphan -b "$REF" "$WORKTREE"
 cp -r dist/assay-ui/. "$WORKTREE"/
 git -C "$WORKTREE" add -A
 git -C "$WORKTREE" commit -m "assay-ui v${VERSION}"
-git -C "$WORKTREE" tag "$TAG"
 
 git push origin main
-git push origin dist
-git push origin "$TAG"
+git push origin "$REF"
 
 echo "==> Done. Consumers install:"
-echo "    \"assay-ui\": \"github:Touchstone-In/tsinconduit-design-system#${TAG}\""
+echo "    \"assay-ui\": \"github:Touchstone-In/tsinconduit-design-system#${REF}\""
