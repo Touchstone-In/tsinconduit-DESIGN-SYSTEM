@@ -1,0 +1,285 @@
+/* ============================================================================
+   ASSAY — the Conduit design language, by Touchstone Institute
+   Layer 1 of 2: design tokens (colours, type, space, shape, elevation, motion)
+
+   A touchstone is an assay stone — the fine-grained slab once used to test
+   precious metal. "Assay" is the design language of the Conduit suite:
+   calm surfaces, one confident teal, and the signature gradient Current
+   drawn from the CONDUIT wordmark's pulse line.
+
+   Consume this file before conduit-ui.css. Every value here is the single
+   source of truth; components and product CSS must reference tokens, never
+   raw hex.
+
+   Theming:
+   - Light is the default (:root).
+   - Dark applies automatically via prefers-color-scheme, or explicitly by
+     setting data-theme="dark" on <html>. data-theme="light" pins light.
+   ========================================================================== */
+
+/* ── Brand typefaces (self-hosted, OFL — see ../fonts/) ───────────────────── */
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./fonts/ibm-plex-sans-400.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('./fonts/ibm-plex-sans-500.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('./fonts/ibm-plex-sans-600.woff2') format('woff2');
+}
+
+/* One icon family across the whole suite: Material Symbols Outlined. */
+@font-face {
+  font-family: 'Material Symbols Outlined';
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src:
+    local('Material Symbols Outlined'),
+    url('./fonts/material-symbols-outlined.woff2') format('woff2');
+}
+
+/* ── Light theme (default) ────────────────────────────────────────────────── */
+:root {
+  color-scheme: light;
+
+  /* Brand core — from the Touchstone Conduit specification */
+  --a-teal:        #0281A0;  /* brand teal — identity, links, focus          */
+  --a-teal-action: #016480;  /* action teal — filled buttons (6.7:1 on #fff) */
+  --a-teal-deep:   #014F65;  /* pressed / hover on action teal               */
+  --a-teal-light:  #CAE8EF;  /* containers, selected fills                   */
+  --a-teal-wash:   #EDF9FB;  /* tinted wash surfaces                         */
+
+  /* The Current — gradient stops of the CONDUIT pulse line */
+  --a-current-start: #232D63; /* indigo navy   */
+  --a-current-mid:   #0281A0; /* brand teal    */
+  --a-current-end:   #93C13E; /* conduit green */
+  --a-current: linear-gradient(90deg,
+      var(--a-current-start) 0%,
+      var(--a-current-mid) 55%,
+      var(--a-current-end) 100%);
+
+  /* Ink */
+  --a-ink:        #0C2B36;   /* headings, highest emphasis text   */
+  --a-ink-body:   #2E4A52;   /* body text                         */
+  --a-ink-muted:  #5A7A85;   /* captions, placeholders, meta      */
+  --a-ink-invert: #FFFFFF;   /* text on teal / navy               */
+
+  /* Surfaces */
+  --a-bg:            #F8F9FA; /* app canvas                        */
+  --a-surface:       #FFFFFF; /* cards, sheets, menus              */
+  --a-surface-sunken:#F1F5F7; /* wells, table headers, code        */
+  --a-rail:          #0C2233; /* navigation rail (deep navy)       */
+  --a-rail-hover:    #16324A;
+  --a-rail-active:   #1E425E;
+  --a-rail-ink:      #C9DAE4; /* resting label/icon on rail        */
+  --a-rail-ink-hi:   #FFFFFF; /* active label/icon on rail         */
+  --a-scrim:         rgba(12, 34, 51, 0.45);
+  /* Open accordion group panel — the rail navy pulled toward brand teal, so an expanded
+     group reads as its own tone rather than a brightness step. Deliberately lighter than
+     --a-rail and darker than --a-rail-active, leaving the active item legible inside it.
+     Defined once: var() substitution picks up whichever theme's teal and rail are in play. */
+  --a-rail-group-open: color-mix(in srgb, var(--a-teal) 16%, var(--a-rail));
+
+  /* Borders */
+  --a-border:        #9FB9C2; /* interactive outlines (WCAG 1.4.11) */
+  --a-border-subtle: #E2EDF0; /* card hairlines, dividers           */
+  --a-border-focus:  #0281A0;
+
+  /* Feedback */
+  --a-success:    #2E7D32;
+  --a-success-bg: #EDF7EE;
+  --a-warning:    #92610A;
+  --a-warning-bg: #FDF4E3;
+  --a-error:      #C62828;
+  --a-error-bg:   #FFF3F3;
+  --a-info:       #016480;
+  --a-info-bg:    #EDF9FB;
+
+  /* Data-visualisation palette — fixed categorical order, assigned to series
+     in this order and never cycled. Validated for CVD separation, chroma and
+     lightness band on white; amber/green require direct labels or a table
+     view as contrast relief. */
+  --a-viz-1: #0281A0;  /* teal   */
+  --a-viz-2: #E8A33D;  /* amber  */
+  --a-viz-3: #4A5AC9;  /* indigo */
+  --a-viz-4: #93C13E;  /* green  */
+  --a-viz-5: #9C5FB5;  /* plum   */
+  --a-viz-6: #B4552D;  /* rust   */
+
+  /* Typography */
+  --a-font: 'IBM Plex Sans', 'Segoe UI', system-ui, sans-serif;
+  --a-font-mono: 'IBM Plex Mono', ui-monospace, 'Cascadia Mono', monospace;
+
+  --a-type-display: 600 2rem/2.5rem var(--a-font);        /* 32/40  */
+  --a-type-title:   600 1.5rem/2rem var(--a-font);        /* 24/32  */
+  --a-type-heading: 600 1.25rem/1.75rem var(--a-font);    /* 20/28  */
+  --a-type-subhead: 600 1rem/1.5rem var(--a-font);        /* 16/24  */
+  --a-type-body:    400 0.9375rem/1.5rem var(--a-font);   /* 15/24  */
+  --a-type-body-sm: 400 0.84375rem/1.25rem var(--a-font); /* 13.5/20*/
+  --a-type-caption: 500 0.78125rem/1rem var(--a-font);    /* 12.5/16*/
+  --a-type-overline:600 0.6875rem/1rem var(--a-font);     /* 11/16, use with
+                                    letter-spacing .08em + uppercase */
+
+  /* Spacing — 8-pt rhythm */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+
+  /* Shape */
+  --a-radius-card:  20px;
+  --a-radius-chip:  14px;
+  --a-radius-input: 10px;
+  --a-radius-pill:  999px;
+
+  /* Elevation */
+  --a-shadow-sm: 0 1px 2px rgba(12, 43, 54, 0.05);
+  --a-shadow-md: 0 2px 12px rgba(2, 129, 160, 0.08);
+  --a-shadow-lg: 0 8px 28px rgba(12, 43, 54, 0.10);
+
+  /* Focus ring */
+  --a-focus-ring: 0 0 0 3px rgba(2, 129, 160, 0.35);
+
+  /* Motion — fast, quiet, purposeful */
+  --a-motion-fast:     120ms cubic-bezier(0.2, 0, 0, 1);
+  --a-motion-standard: 200ms cubic-bezier(0.2, 0, 0, 1);
+  --a-motion-emphatic: 320ms cubic-bezier(0.2, 0, 0, 1);
+
+  /* Layout metrics */
+  --a-rail-width:      248px;
+  --a-rail-collapsed:  72px;
+  --a-topbar-height:   64px;
+  --a-content-max:     1280px;
+  --a-gutter:          var(--space-5);
+}
+
+/* ── Dark theme ───────────────────────────────────────────────────────────── */
+[data-theme='dark'] {
+  color-scheme: dark;
+
+  --a-teal:        #38B2CC;
+  --a-teal-action: #2598B8;
+  --a-teal-deep:   #1E85A0;
+  --a-teal-light:  #164E63;
+  --a-teal-wash:   #12303E;
+
+  --a-ink:        #F0F9FF;
+  --a-ink-body:   #CBD5E1;
+  --a-ink-muted:  #94A3B8;
+  --a-ink-invert: #06222B;
+
+  --a-bg:            #111827;
+  --a-surface:       #1E2A38;
+  --a-surface-sunken:#18222F;
+  --a-rail:          #0A1628;
+  --a-rail-hover:    #142438;
+  --a-rail-active:   #1C3049;
+  --a-rail-ink:      #A9BDD0;
+  --a-rail-ink-hi:   #FFFFFF;
+  --a-scrim:         rgba(0, 0, 0, 0.55);
+
+  --a-border:        #334155;
+  --a-border-subtle: #263347;
+  --a-border-focus:  #38B2CC;
+
+  --a-success:    #86EFAC;
+  --a-success-bg: #12301C;
+  --a-warning:    #FBD38D;
+  --a-warning-bg: #33270F;
+  --a-error:      #FCA5A5;
+  --a-error-bg:   #3B1515;
+  --a-info:       #38B2CC;
+  --a-info-bg:    #12303E;
+
+  --a-viz-1: #0E93B4;
+  --a-viz-2: #B8842D;
+  --a-viz-3: #5F72D6;
+  --a-viz-4: #79A032;
+  --a-viz-5: #8F5FB0;
+  --a-viz-6: #B25E3C;
+
+  --a-current-start: #6B7BD6;
+  --a-current-mid:   #38B2CC;
+  --a-current-end:   #A9D45E;
+
+  --a-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --a-shadow-md: 0 2px 20px rgba(0, 0, 0, 0.4);
+  --a-shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.45);
+
+  --a-focus-ring: 0 0 0 3px rgba(56, 178, 204, 0.45);
+}
+
+/* System preference, unless the app pinned light explicitly */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+
+    --a-teal:        #38B2CC;
+    --a-teal-action: #2598B8;
+    --a-teal-deep:   #1E85A0;
+    --a-teal-light:  #164E63;
+    --a-teal-wash:   #12303E;
+
+    --a-ink:        #F0F9FF;
+    --a-ink-body:   #CBD5E1;
+    --a-ink-muted:  #94A3B8;
+    --a-ink-invert: #06222B;
+
+    --a-bg:            #111827;
+    --a-surface:       #1E2A38;
+    --a-surface-sunken:#18222F;
+    --a-rail:          #0A1628;
+    --a-rail-hover:    #142438;
+    --a-rail-active:   #1C3049;
+    --a-rail-ink:      #A9BDD0;
+    --a-rail-ink-hi:   #FFFFFF;
+    --a-scrim:         rgba(0, 0, 0, 0.55);
+
+    --a-border:        #334155;
+    --a-border-subtle: #263347;
+    --a-border-focus:  #38B2CC;
+
+    --a-success:    #86EFAC;
+    --a-success-bg: #12301C;
+    --a-warning:    #FBD38D;
+    --a-warning-bg: #33270F;
+    --a-error:      #FCA5A5;
+    --a-error-bg:   #3B1515;
+    --a-info:       #38B2CC;
+    --a-info-bg:    #12303E;
+
+    --a-viz-1: #0E93B4;
+    --a-viz-2: #B8842D;
+    --a-viz-3: #5F72D6;
+    --a-viz-4: #79A032;
+    --a-viz-5: #8F5FB0;
+    --a-viz-6: #B25E3C;
+
+    --a-current-start: #6B7BD6;
+    --a-current-mid:   #38B2CC;
+    --a-current-end:   #A9D45E;
+
+    --a-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+    --a-shadow-md: 0 2px 20px rgba(0, 0, 0, 0.4);
+    --a-shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.45);
+
+    --a-focus-ring: 0 0 0 3px rgba(56, 178, 204, 0.45);
+  }
+}
