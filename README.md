@@ -68,6 +68,31 @@ credentials are needed to fetch it):
 > pinned hash in `bun.lock` from an earlier state, unrelated to this —
 > just delete `bun.lock` and reinstall to regenerate it.)
 
+> **Second gotcha, specific to *bumping* the version: npm does not
+> re-resolve a git dependency when only the ref changes.** Edit
+> `package.json` from `#assay-ui-v0.2.0` to `#assay-ui-v0.3.0`, run a plain
+> `npm install`, and npm will update the lockfile's requested spec string
+> while leaving `"resolved"` pinned to the *old* commit — so the build
+> silently keeps compiling against the previous version, and everything
+> looks green. Delete the lockfile entry first to force re-resolution:
+>
+> ```bash
+> node -e '
+>   const fs = require("fs");
+>   const p = "package-lock.json";
+>   const data = JSON.parse(fs.readFileSync(p, "utf8"));
+>   delete data.packages["node_modules/assay-ui"];
+>   fs.writeFileSync(p, JSON.stringify(data, null, 2) + "\n");
+> '
+> npm install          # re-resolves to the new branch tip
+> # then apply the ssh -> https patch above, and verify:
+> cat node_modules/assay-ui/package.json | grep '"version"'
+> ```
+>
+> Always confirm the installed `version` matches the ref you asked for, and
+> that the lockfile's `resolved` commit SHA actually changed. A green build
+> alone does not prove the bump landed.
+
 Then wire the CSS toolkit into `angular.json`'s `styles` array, after
 your own service's stylesheet (loading order matters — Assay's classes
 are uniquely prefixed `a-*` and its custom properties `--a-*`, so it
