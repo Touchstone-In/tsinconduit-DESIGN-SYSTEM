@@ -15,9 +15,11 @@ export interface AssayNavItem {
 /**
  * A section of the rail. Groups with a `label` render an `a-rail__section` header above
  * their items; omit `label` for a short nav with no section grouping (matching the Assay
- * reference mockups that have no headers at all, e.g. Connect, Insights). There is
- * deliberately no collapse/accordion behaviour — no Assay reference mockup has one; a host
- * app with a very deep nav should split it into more sections rather than nest a group.
+ * reference mockups that have no headers at all, e.g. Connect, Insights). A labeled group
+ * with more than one item renders as a collapsible accordion section (one group open at a
+ * time, auto-expanding to reveal the active route) — see {@link AssayRailComponent}'s own doc
+ * comment for the full behaviour. A labeled group with exactly one item still renders flat,
+ * since there's nothing to disclose.
  */
 export interface AssayNavGroup {
   label?: string;

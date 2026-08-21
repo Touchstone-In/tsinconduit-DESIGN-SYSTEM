@@ -171,6 +171,64 @@ a:hover { text-decoration: underline; }
   padding: var(--space-4) var(--space-3) var(--space-1);
 }
 
+/* Accordion section header — a labeled group with more than one item (AssayRailComponent
+   decides which). Same type treatment as the plain .a-rail__section label, just interactive. */
+.a-rail__section--toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+  border-radius: var(--a-radius-input);
+  transition: color var(--a-motion-fast);
+}
+.a-rail__section--toggle:hover,
+.a-rail__section--toggle[aria-expanded='true'] {
+  color: var(--a-rail-ink-hi);
+}
+.a-rail__section--toggle:focus-visible {
+  outline: 2px solid var(--a-teal);
+  outline-offset: 1px;
+}
+
+.a-rail__section-chevron {
+  font-size: 18px !important;
+  flex: none;
+  transition: transform var(--a-motion-standard);
+}
+.a-rail__section--toggle[aria-expanded='true'] .a-rail__section-chevron {
+  transform: rotate(180deg);
+}
+
+/* Collapsible group body — a CSS-only expand/collapse via the grid-rows 0fr/1fr trick (no JS
+   height measurement needed). .a-rail__group-inner supplies the overflow:hidden that clips
+   the row during the transition; its own children keep the item gap consistent with a flat
+   (non-accordion) group's items. */
+.a-rail__group {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--a-motion-standard);
+}
+.a-rail__group.is-open {
+  grid-template-rows: 1fr;
+}
+.a-rail__group-inner {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.a-rail__group-inner > .a-rail__item {
+  margin-top: var(--space-2);
+}
+.a-rail__group-inner > .a-rail__item:first-child {
+  margin-top: var(--space-1);
+}
+
 .a-rail__item {
   display: flex;
   align-items: center;

@@ -19,21 +19,42 @@ const PULSE_SVG = (w, h) =>
   '<path d="M2 16 H120 C126 16 126 5 132 5 C138 5 138 22 144 22 C149 22 150 16 155 16 H218"' +
   ' stroke="url(#cur2)" stroke-width="3" stroke-linecap="round" fill="none"/></svg>';
 
+function renderNavItem(item) {
+  const current = item.active ? ' aria-current="page"' : '';
+  const badge = item.badge
+    ? '<span class="a-rail__badge">' + item.badge + '</span>'
+    : '';
+  return (
+    '<a class="a-rail__item" href="#"' + current + '>' +
+    '<span class="a-icon" aria-hidden="true">' + item.icon + '</span>' +
+    item.label + badge + '</a>'
+  );
+}
+
 function renderShell(cfg) {
   const nav = cfg.nav
     .map(function (item) {
       if (item.section) {
         return '<div class="a-rail__section">' + item.section + '</div>';
       }
-      const current = item.active ? ' aria-current="page"' : '';
-      const badge = item.badge
-        ? '<span class="a-rail__badge">' + item.badge + '</span>'
-        : '';
-      return (
-        '<a class="a-rail__item" href="#"' + current + '>' +
-        '<span class="a-icon" aria-hidden="true">' + item.icon + '</span>' +
-        item.label + badge + '</a>'
-      );
+      /* An accordion group — `{ group, expanded, items }` — matches AssayRailComponent's own
+         a-rail__section--toggle / a-rail__group markup exactly, so this mockup demonstrates the
+         real component's rendered output rather than an approximation of it. */
+      if (item.group) {
+        const expanded = !!item.expanded;
+        return (
+          '<button type="button" class="a-rail__section a-rail__section--toggle" aria-expanded="' +
+          (expanded ? 'true' : 'false') + '">' +
+          '<span>' + item.group + '</span>' +
+          '<span class="a-icon a-rail__section-chevron" aria-hidden="true">expand_more</span>' +
+          '</button>' +
+          '<div class="a-rail__group' + (expanded ? ' is-open' : '') + '">' +
+          '<div class="a-rail__group-inner">' +
+          item.items.map(renderNavItem).join('') +
+          '</div></div>'
+        );
+      }
+      return renderNavItem(item);
     })
     .join('');
 
