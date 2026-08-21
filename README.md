@@ -98,9 +98,11 @@ outputs, content-projection slots) and usage examples.
   accept only the nav items / menu items you pass in. Neither invents
   "Settings" or "My profile" links — if your service doesn't have a
   real route for something, don't pass it.
-- **No collapsible nav-group behaviour.** No Assay reference mockup has
-  one; the rail renders flat sections and flat items. If a service's
-  nav is very deep, split it into more sections rather than nesting.
+- **No nesting below one level.** A labeled group collapses into an
+  accordion section and the rail reduces to icons on narrow viewports
+  (see `assay-rail`), but groups hold items, and items hold nothing. If a
+  service's nav is deeper than that, split it into more groups rather
+  than nesting further.
 - **No opinion on how you compose the shell.** `assay-rail` and
   `assay-topbar` are independent components — wire them into your own
   `mat-sidenav-container` (or plain flex layout, if your service doesn't

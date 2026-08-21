@@ -31,9 +31,34 @@ function renderNavItem(item) {
   );
 }
 
+/* Icon-only row for the collapsed rail — matches AssayRailComponent's a-rail__item--icon
+   output, including the badge degrading to a corner dot. */
+function renderNavIcon(icon, label, opts) {
+  const o = opts || {};
+  const current = o.active ? ' aria-current="page"' : '';
+  const cls = 'a-rail__item a-rail__item--icon' + (o.current ? ' is-current' : '');
+  const dot = o.badge ? '<span class="a-rail__badge a-rail__badge--dot"></span>' : '';
+  return (
+    '<a class="' + cls + '" href="#" title="' + label + '" aria-label="' + label + '"' + current + '>' +
+    '<span class="a-icon" aria-hidden="true">' + icon + '</span>' + dot + '</a>'
+  );
+}
+
 function renderShell(cfg) {
+  const collapsed = !!cfg.railCollapsed;
+
   const nav = cfg.nav
     .map(function (item) {
+      /* Collapsed: a labeled group reduces to one icon standing for the whole category,
+         an unlabeled run of items keeps each item's own icon. */
+      if (collapsed) {
+        if (item.section) return '';
+        if (item.group) {
+          const groupIcon = item.icon || (item.items[0] && item.items[0].icon) || 'chevron_right';
+          return renderNavIcon(groupIcon, item.group, { current: !!item.expanded });
+        }
+        return renderNavIcon(item.icon, item.label, { active: item.active, badge: item.badge });
+      }
       if (item.section) {
         return '<div class="a-rail__section">' + item.section + '</div>';
       }
@@ -61,16 +86,27 @@ function renderShell(cfg) {
   const user = cfg.user || { name: 'Amara Osei', role: 'Program Operations', initials: 'AO' };
 
   document.write(
-    '<nav class="a-rail" aria-label="' + cfg.service + ' navigation">' +
+    '<nav class="a-rail' + (collapsed ? ' a-rail--collapsed' : '') +
+      '" aria-label="' + cfg.service + ' navigation">' +
       '<div class="a-rail__brand">' +
         '<span class="a-mark">' + MARK_SVG + '</span>' +
-        '<span><span class="a-rail__brand-name">CONDUIT</span><br>' +
-        '<span class="a-rail__brand-service">' + cfg.service + '</span></span>' +
+        (collapsed
+          ? ''
+          : '<span><span class="a-rail__brand-name">CONDUIT</span><br>' +
+            '<span class="a-rail__brand-service">' + cfg.service + '</span></span>' +
+            '<button class="a-rail__collapse" aria-label="Collapse navigation">' +
+            '<span class="a-icon" aria-hidden="true">left_panel_close</span></button>') +
       '</div>' +
+      (collapsed
+        ? '<button class="a-rail__collapse a-rail__collapse--solo" aria-label="Expand navigation">' +
+          '<span class="a-icon" aria-hidden="true">left_panel_open</span></button>'
+        : '') +
       nav +
       '<div class="a-rail__spacer"></div>' +
-      '<a class="a-rail__item" href="#"><span class="a-icon" aria-hidden="true">apps</span>All Conduit apps</a>' +
-      '<a class="a-rail__item" href="#"><span class="a-icon" aria-hidden="true">settings</span>Settings</a>' +
+      (collapsed
+        ? renderNavIcon('apps', 'All Conduit apps', {}) + renderNavIcon('settings', 'Settings', {})
+        : '<a class="a-rail__item" href="#"><span class="a-icon" aria-hidden="true">apps</span>All Conduit apps</a>' +
+          '<a class="a-rail__item" href="#"><span class="a-icon" aria-hidden="true">settings</span>Settings</a>') +
     '</nav>' +
 
     '<header class="a-topbar">' +

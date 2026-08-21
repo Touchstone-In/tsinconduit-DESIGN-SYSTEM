@@ -23,6 +23,12 @@ export interface AssayNavItem {
  */
 export interface AssayNavGroup {
   label?: string;
+  /**
+   * Icon standing in for the whole group when the rail is collapsed to its icon-only width.
+   * Optional — a labeled group without one falls back to its first item's icon, so existing
+   * navs keep working; supply it when that first icon reads as the item rather than the group.
+   */
+  icon?: string;
   items: AssayNavItem[];
 }
 

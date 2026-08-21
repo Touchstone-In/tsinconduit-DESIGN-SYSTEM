@@ -87,6 +87,11 @@
   --a-rail-ink:      #C9DAE4; /* resting label/icon on rail        */
   --a-rail-ink-hi:   #FFFFFF; /* active label/icon on rail         */
   --a-scrim:         rgba(12, 34, 51, 0.45);
+  /* Open accordion group panel — the rail navy pulled toward brand teal, so an expanded
+     group reads as its own tone rather than a brightness step. Deliberately lighter than
+     --a-rail and darker than --a-rail-active, leaving the active item legible inside it.
+     Defined once: var() substitution picks up whichever theme's teal and rail are in play. */
+  --a-rail-group-open: color-mix(in srgb, var(--a-teal) 16%, var(--a-rail));
 
   /* Borders */
   --a-border:        #9FB9C2; /* interactive outlines (WCAG 1.4.11) */

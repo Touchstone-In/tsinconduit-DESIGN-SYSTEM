@@ -1,5 +1,5 @@
 import { NgTemplateOutlet } from '@angular/common';
-import { Component, computed, inject, input, output, signal } from '@angular/core';
+import { Component, computed, effect, inject, input, output, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { filter, map, startWith } from 'rxjs';
@@ -16,10 +16,17 @@ import type { AssayNavGroup, AssayNavItem } from '../types';
  * the rider's last choice per `service()` in `localStorage`. An unlabeled group, or a labeled
  * group with exactly one item, renders flat instead — there's nothing to disclose.
  *
+ * The rail also reduces itself to an icon-only strip (`var(--a-rail-collapsed)`, 72px) when the
+ * viewport drops below `autoCollapseBelow()`, and can be toggled either way by hand. Collapsed,
+ * a labeled group shows one icon standing for the whole category — clicking it restores the full
+ * rail with that group open — while an unlabeled group shows its items' own icons. Expanded, every
+ * row shows icon and label together.
+ *
  * Host apps compose this inside their own drawer/sidenav (e.g. Angular Material's
  * `mat-sidenav`) rather than this library owning that responsibility, since hosts differ in
- * whether they use Material at all. Give the rail a fixed width of `var(--a-rail-width)`
- * (248px) and a background of `var(--a-rail)` on its containing element.
+ * whether they use Material at all. The rail sizes its own host element between
+ * `var(--a-rail-width)` and `var(--a-rail-collapsed)`; if your drawer sets its own fixed width,
+ * let it size to content (`width: auto`) or react to `collapsedChange`.
  *
  * @example
  * ```html
@@ -31,8 +38,11 @@ import type { AssayNavGroup, AssayNavItem } from '../types';
 @Component({
   selector: 'assay-rail',
   imports: [NgTemplateOutlet, RouterLink, RouterLinkActive],
+  host: {
+    '[class.is-collapsed]': 'collapsed()',
+  },
   template: `
-    <nav class="a-rail" [attr.aria-label]="ariaLabel()">
+    <nav class="a-rail" [class.a-rail--collapsed]="collapsed()" [attr.aria-label]="ariaLabel()">
       <div class="a-rail__brand">
         <span class="a-mark" aria-hidden="true">
           <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
@@ -52,14 +62,49 @@ import type { AssayNavGroup, AssayNavItem } from '../types';
             />
           </svg>
         </span>
-        <span>
-          <span class="a-rail__brand-name">CONDUIT</span><br />
-          <span class="a-rail__brand-service">{{ service() }}</span>
-        </span>
+        @if (!collapsed()) {
+          <span>
+            <span class="a-rail__brand-name">CONDUIT</span><br />
+            <span class="a-rail__brand-service">{{ service() }}</span>
+          </span>
+          @if (collapsible()) {
+            <button type="button" class="a-rail__collapse" aria-label="Collapse navigation" (click)="toggleCollapsed()">
+              <span class="a-icon" aria-hidden="true">left_panel_close</span>
+            </button>
+          }
+        }
       </div>
 
+      @if (collapsed() && collapsible()) {
+        <button
+          type="button"
+          class="a-rail__collapse a-rail__collapse--solo"
+          aria-label="Expand navigation"
+          (click)="toggleCollapsed()"
+        >
+          <span class="a-icon" aria-hidden="true">left_panel_open</span>
+        </button>
+      }
+
       @for (group of groups(); track $index) {
-        @if (isCollapsible(group)) {
+        @if (collapsed()) {
+          @if (group.label) {
+            <button
+              type="button"
+              class="a-rail__item a-rail__item--icon"
+              [class.is-current]="isActiveGroup(group)"
+              [title]="group.label"
+              [attr.aria-label]="group.label"
+              (click)="revealGroup(group)"
+            >
+              <span class="a-icon" aria-hidden="true">{{ groupIcon(group) }}</span>
+            </button>
+          } @else {
+            @for (item of group.items; track item.label) {
+              <ng-container [ngTemplateOutlet]="railIconItem" [ngTemplateOutletContext]="{ $implicit: item }" />
+            }
+          }
+        } @else if (isCollapsible(group)) {
           <button
             type="button"
             class="a-rail__section a-rail__section--toggle"
@@ -88,7 +133,12 @@ import type { AssayNavGroup, AssayNavItem } from '../types';
       }
 
       <div class="a-rail__spacer"></div>
-      <ng-content select="[assayRailFooter]" />
+      <!-- Projected once and hidden by CSS when collapsed, rather than sitting inside an @if:
+           footer text has nowhere to go at 72px, but re-projecting on every toggle would
+           needlessly tear down whatever the host put here. -->
+      <div class="a-rail__footer-slot">
+        <ng-content select="[assayRailFooter]" />
+      </div>
     </nav>
 
     <ng-template #railItem let-item>
@@ -118,11 +168,50 @@ import type { AssayNavGroup, AssayNavItem } from '../types';
         </a>
       }
     </ng-template>
+
+    <ng-template #railIconItem let-item>
+      @if (item.routerLink) {
+        <a
+          [routerLink]="item.routerLink"
+          routerLinkActive
+          #rla="routerLinkActive"
+          [routerLinkActiveOptions]="{ exact: !!item.exact }"
+          [attr.aria-current]="rla.isActive ? 'page' : null"
+          class="a-rail__item a-rail__item--icon"
+          [title]="item.label"
+          [attr.aria-label]="item.label"
+          (click)="itemClick.emit(item)"
+        >
+          <span class="a-icon" aria-hidden="true">{{ item.icon }}</span>
+          @if (item.badge !== undefined) {
+            <span class="a-rail__badge a-rail__badge--dot" aria-hidden="true"></span>
+          }
+        </a>
+      } @else {
+        <a
+          [href]="item.href"
+          class="a-rail__item a-rail__item--icon"
+          [title]="item.label"
+          [attr.aria-label]="item.label"
+          (click)="itemClick.emit(item)"
+        >
+          <span class="a-icon" aria-hidden="true">{{ item.icon }}</span>
+          @if (item.badge !== undefined) {
+            <span class="a-rail__badge a-rail__badge--dot" aria-hidden="true"></span>
+          }
+        </a>
+      }
+    </ng-template>
   `,
   styles: `
     :host {
       display: block;
       height: 100%;
+      width: var(--a-rail-width);
+      transition: width var(--a-motion-standard);
+    }
+    :host(.is-collapsed) {
+      width: var(--a-rail-collapsed);
     }
     .a-rail {
       height: 100%;
@@ -136,8 +225,15 @@ export class AssayRailComponent {
   readonly service = input.required<string>();
   readonly groups = input.required<AssayNavGroup[]>();
   readonly ariaLabel = input('Main navigation');
+  /** Set false to pin the rail open — no toggle, no auto-reduction. */
+  readonly collapsible = input(true);
+  /** Viewport width (px) under which the rail reduces itself to icons on its own. Set 0 to
+   *  leave collapsing entirely to the rider's toggle. */
+  readonly autoCollapseBelow = input(1280);
   /** Fires on every item click — hosts typically use this to close a mobile drawer. */
   readonly itemClick = output<AssayNavGroup['items'][number]>();
+  /** Fires whenever the rail reduces or restores, so a host drawer can resize with it. */
+  readonly collapsedChange = output<boolean>();
 
   private readonly router = inject(Router);
   private readonly currentUrl = toSignal(
@@ -148,6 +244,63 @@ export class AssayRailComponent {
     ),
     { initialValue: this.router.url },
   );
+
+  /** True while the viewport sits below `autoCollapseBelow()`. Drives the rail on its own
+   *  unless the rider has since overridden it by hand. */
+  private readonly viewportNarrow = signal(false);
+  /** The rider's explicit choice, or null to follow the viewport. Crossing the breakpoint
+   *  clears it, so a resize hands control back to the automatic behaviour. */
+  private readonly manuallyCollapsed = signal<boolean | null>(null);
+
+  readonly collapsed = computed(() => {
+    if (!this.collapsible()) return false;
+    return this.manuallyCollapsed() ?? this.viewportNarrow();
+  });
+
+  constructor() {
+    effect((onCleanup) => {
+      const breakpoint = this.autoCollapseBelow();
+      if (!breakpoint || typeof window === 'undefined' || !window.matchMedia) return;
+
+      const query = window.matchMedia(`(max-width: ${breakpoint - 1}px)`);
+      const apply = (matches: boolean) => {
+        this.viewportNarrow.set(matches);
+        this.manuallyCollapsed.set(null);
+      };
+      this.viewportNarrow.set(query.matches);
+
+      const onChange = (event: MediaQueryListEvent) => apply(event.matches);
+      query.addEventListener('change', onChange);
+      onCleanup(() => query.removeEventListener('change', onChange));
+    });
+
+    let previous: boolean | null = null;
+    effect(() => {
+      const next = this.collapsed();
+      if (previous !== null && previous !== next) this.collapsedChange.emit(next);
+      previous = next;
+    });
+  }
+
+  protected toggleCollapsed(): void {
+    this.manuallyCollapsed.set(!this.collapsed());
+  }
+
+  /** Collapsed, a category icon is the only handle onto its items — so clicking it restores
+   *  the full rail with that group open rather than navigating somewhere arbitrary. */
+  protected revealGroup(group: AssayNavGroup): void {
+    this.manuallyCollapsed.set(false);
+    if (group.label) {
+      this.manuallyOpenedLabel.set(group.label);
+      this.saveRememberedGroup(group.label);
+    }
+  }
+
+  /** Falls back to the first item's icon so navs written before groups had icons still
+   *  collapse to something meaningful. */
+  protected groupIcon(group: AssayNavGroup): string {
+    return group.icon ?? group.items[0]?.icon ?? 'chevron_right';
+  }
 
   /** The one open group, by label. Seeded from the group owning the active route if there is
    *  one, else the rider's last manual choice for this `service()`, else nothing. Recomputes
@@ -176,6 +329,11 @@ export class AssayRailComponent {
 
   protected isExpanded(group: AssayNavGroup): boolean {
     return !!group.label && this.expandedGroupLabel() === group.label;
+  }
+
+  /** Marks the collapsed rail's category icon for whichever group owns the active route. */
+  protected isActiveGroup(group: AssayNavGroup): boolean {
+    return !!group.label && this.activeGroupLabel() === group.label;
   }
 
   protected groupId(index: number): string {

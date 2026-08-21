@@ -3,21 +3,22 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Assay — Accordion rail</title>
+<title>Assay — Collapsed rail (categories)</title>
 <link rel="stylesheet" href="../../projects/assay-ui/styles/tokens.css">
 <link rel="stylesheet" href="../../projects/assay-ui/styles/toolkit.css">
 <style>
-  .callout { max-width: 640px; }
+  .callout { max-width: 660px; }
   .callout .a-current-bar { margin-bottom: var(--space-4); }
   .callout p { margin-top: var(--space-3); color: var(--a-ink-muted); }
   .callout code { font: var(--a-type-caption); background: var(--a-surface-sunken); padding: 2px 6px; border-radius: 4px; }
 </style>
 <script src="shell.js"></script>
 </head>
-<body class="a-shell">
+<body class="a-shell a-shell--rail-collapsed">
 <script>
 renderShell({
   service: 'PRO',
+  railCollapsed: true,
   pageContext: 'Management console',
   searchScope: 'PRO Administration',
   user: { name: 'Adaeze Reyes', role: 'Program Administrator', initials: 'AR' },
@@ -28,7 +29,7 @@ renderShell({
       icon: 'inbox',
       expanded: true,
       items: [
-        { icon: 'folder_shared', label: 'Application Management', active: true },
+        { icon: 'folder_shared', label: 'Application Management' },
         { icon: 'edit_document', label: 'Verify Documents' },
         { icon: 'search', label: 'Review Submitted Applications' },
       ],
@@ -36,7 +37,6 @@ renderShell({
     {
       group: 'MMI',
       icon: 'videocam',
-      expanded: false,
       items: [
         { icon: 'videocam', label: 'Multiple Mini Interview' },
         { icon: 'admin_panel_settings', label: 'MMI Administration' },
@@ -45,7 +45,6 @@ renderShell({
     {
       group: 'Screening & KYE',
       icon: 'policy',
-      expanded: false,
       items: [
         { icon: 'checklist', label: 'Screener Queue' },
         { icon: 'apartment', label: 'WDOMS School Lookup' },
@@ -62,35 +61,34 @@ renderShell({
   <div class="a-page-head">
     <div class="a-page-head__row">
       <div>
-        <h1 class="a-title">Accordion nav groups</h1>
-        <p class="a-page-head__sub">A labeled rail group with more than one item now collapses behind a toggle</p>
+        <h1 class="a-title">Collapsed rail — with categories</h1>
+        <p class="a-page-head__sub">One icon per category, standing in for the whole group</p>
       </div>
     </div>
     <span class="a-current-bar"></span>
   </div>
 
   <div class="a-card callout">
-    <h2 class="a-heading">What changed</h2>
+    <h2 class="a-heading">What you're looking at</h2>
     <p>
-      <code>&lt;assay-rail&gt;</code> groups with a <code>label</code> and more than one item render as a collapsible
-      section — a clickable header with a chevron, one group open at a time. The group containing the active route
-      auto-expands on load and on navigation; otherwise the rail remembers whichever group a rider last opened,
-      per service, in <code>localStorage</code>.
+      The rail reduces to <code>--a-rail-collapsed</code> (72px). Because this nav has categories, each labeled
+      group collapses to a <em>single</em> icon representing the category — <strong>Applications</strong>,
+      <strong>MMI</strong>, <strong>Screening &amp; KYE</strong> — not one icon per destination. The category
+      owning the active route keeps the active fill, so you can still see where you are.
     </p>
     <p>
-      <strong>Applications</strong> is open above because it's this page's active section. Try the rail on the left:
-      click <strong>MMI</strong> or <strong>Screening &amp; KYE</strong> to open them — <strong>Applications</strong>
-      will close, since only one group stays open at a time.
+      Each group supplies its own <code>icon</code>; a group without one falls back to its first item's icon, so
+      navs written before this existed still collapse to something meaningful. Every icon carries its label as a
+      <code>title</code> and <code>aria-label</code>, so the name is available on hover and to screen readers.
     </p>
     <p>
-      The open group carries its own tone — <code>--a-rail-group-open</code>, the rail navy pulled 16% toward brand
-      teal — so header and items read as one panel rather than a brightness step. It sits deliberately between
-      <code>--a-rail</code> and <code>--a-rail-active</code>, leaving the active item's fill and Current slice
-      legible inside it.
+      Clicking a category icon restores the full rail with that group open, rather than navigating somewhere
+      arbitrary — collapsed, the icon is the only handle onto the items underneath it.
     </p>
     <p>
-      A group with no <code>label</code>, or exactly one item, still renders flat — nothing to disclose there, so
-      no toggle chrome appears (see <strong>Overview</strong> above the accordion groups).
+      The rail reduces on its own below <code>autoCollapseBelow</code> (1280px by default) and can be toggled either
+      way with the control under the brand mark. Crossing the breakpoint clears a manual override, handing control
+      back to the automatic behaviour.
     </p>
   </div>
 
