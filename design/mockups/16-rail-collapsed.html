@@ -86,9 +86,12 @@ renderShell({
       arbitrary — collapsed, the icon is the only handle onto the items underneath it.
     </p>
     <p>
-      The rail reduces on its own below <code>autoCollapseBelow</code> (1280px by default) and can be toggled either
-      way with the control under the brand mark. Crossing the breakpoint clears a manual override, handing control
-      back to the automatic behaviour.
+      The toggle under the brand mark always works. Unprompted reduction below a viewport width is opt-in:
+      <code>autoCollapseBelow</code> defaults to <code>0</code>, because the rail sizes its own host element and a
+      host drawer with a hard-coded <code>width</code> would not follow it — leaving a 72px rail inside a 248px
+      drawer. Give that drawer <code>width: auto</code> (or resize it from <code>collapsedChange</code>) and then set
+      <code>autoCollapseBelow</code> to a breakpoint; 1280 is the Assay reference value. Crossing it clears a manual
+      override, handing control back to the automatic behaviour.
     </p>
   </div>
 

@@ -16,8 +16,8 @@ import type { AssayNavGroup, AssayNavItem } from '../types';
  * the rider's last choice per `service()` in `localStorage`. An unlabeled group, or a labeled
  * group with exactly one item, renders flat instead — there's nothing to disclose.
  *
- * The rail also reduces itself to an icon-only strip (`var(--a-rail-collapsed)`, 72px) when the
- * viewport drops below `autoCollapseBelow()`, and can be toggled either way by hand. Collapsed,
+ * The rail also reduces to an icon-only strip (`var(--a-rail-collapsed)`, 72px) on the rider's
+ * toggle, and unprompted below `autoCollapseBelow()` once a host opts into that. Collapsed,
  * a labeled group shows one icon standing for the whole category — clicking it restores the full
  * rail with that group open — while an unlabeled group shows its items' own icons. Expanded, every
  * row shows icon and label together.
@@ -25,8 +25,10 @@ import type { AssayNavGroup, AssayNavItem } from '../types';
  * Host apps compose this inside their own drawer/sidenav (e.g. Angular Material's
  * `mat-sidenav`) rather than this library owning that responsibility, since hosts differ in
  * whether they use Material at all. The rail sizes its own host element between
- * `var(--a-rail-width)` and `var(--a-rail-collapsed)`; if your drawer sets its own fixed width,
- * let it size to content (`width: auto`) or react to `collapsedChange`.
+ * `var(--a-rail-width)` and `var(--a-rail-collapsed)`, so a drawer with a hard-coded width will
+ * not follow it: give that drawer `width: auto`, or resize it from `(collapsedChange)`. Until
+ * you have, leave `autoCollapseBelow` at its default of 0 — otherwise the rail shrinks inside a
+ * drawer that doesn't, which is why unprompted collapsing is opt-in rather than automatic.
  *
  * @example
  * ```html
@@ -227,9 +229,18 @@ export class AssayRailComponent {
   readonly ariaLabel = input('Main navigation');
   /** Set false to pin the rail open — no toggle, no auto-reduction. */
   readonly collapsible = input(true);
-  /** Viewport width (px) under which the rail reduces itself to icons on its own. Set 0 to
-   *  leave collapsing entirely to the rider's toggle. */
-  readonly autoCollapseBelow = input(1280);
+  /**
+   * Viewport width (px) under which the rail reduces itself to icons unprompted. **Off by
+   * default (0)**, because the rail sizes its own host element and most hosts wrap it in a
+   * drawer with a hard-coded `width: var(--a-rail-width)` — switching this on without also
+   * letting that drawer size to content leaves a 72px rail inside a 248px drawer. Set it to a
+   * breakpoint (1280 is the Assay reference value) only once the host drawer follows the rail:
+   * `width: auto` on the drawer, or resize it from `(collapsedChange)`. Note that
+   * `mat-sidenav-container` re-measures its content margins only on open/close, mode change,
+   * viewport-ruler change, or with `[autosize]`, so a width that changes underneath it can
+   * latch a stale margin. The manual toggle works regardless of this setting.
+   */
+  readonly autoCollapseBelow = input(0);
   /** Fires on every item click — hosts typically use this to close a mobile drawer. */
   readonly itemClick = output<AssayNavGroup['items'][number]>();
   /** Fires whenever the rail reduces or restores, so a host drawer can resize with it. */
