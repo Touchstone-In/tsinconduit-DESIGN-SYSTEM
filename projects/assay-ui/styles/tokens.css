@@ -40,7 +40,17 @@
   src: url('./fonts/ibm-plex-sans-600.woff2') format('woff2');
 }
 
-/* One icon family across the whole suite: Material Symbols Outlined. */
+/* One icon family across the whole suite: Material Symbols Outlined.
+   The file is deliberately NOT named material-symbols-outlined.woff2. A host that also
+   installs the `material-symbols` npm package pulls in a file by that exact basename, and
+   Angular's unit-test builder — which, unlike the production build, applies no output
+   hashing — rejects two different files emitting to one path. Hashing hid that collision in
+   production builds rather than resolving it, so it surfaced only as an unrunnable test
+   suite. Distinct basenames let both coexist.
+
+   This subset is ~340KB against the full face's ~3.96MB. A host loading both ships both;
+   dropping `material-symbols` from angular.json is worthwhile wherever this subset covers
+   every glyph that service uses. */
 @font-face {
   font-family: 'Material Symbols Outlined';
   font-style: normal;
@@ -48,7 +58,7 @@
   font-display: block;
   src:
     local('Material Symbols Outlined'),
-    url('./fonts/material-symbols-outlined.woff2') format('woff2');
+    url('./fonts/assay-material-symbols-subset.woff2') format('woff2');
 }
 
 /* ── Light theme (default) ────────────────────────────────────────────────── */
