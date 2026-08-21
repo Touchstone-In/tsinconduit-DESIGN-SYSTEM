@@ -117,6 +117,45 @@ import { AssayRailComponent, AssayTopbarComponent, AssayFooterComponent } from '
 See `projects/assay-ui/README.md` for the full component API (inputs,
 outputs, content-projection slots) and usage examples.
 
+## Adopting the collapsible rail
+
+`assay-rail` can reduce to an icon-only strip (`var(--a-rail-collapsed)`,
+72px). **The rail sizes its own host element** — it cannot resize the
+drawer you wrapped it in. Two host preconditions, both easy to miss
+because neither produces a build error:
+
+1. **The drawer must size to content.** Most Conduit services pin
+   `width: var(--a-rail-width)` (some also `min-width`) on their
+   `mat-sidenav`. With that in place the rail shrinks to 72px inside a
+   drawer that stays at 248px — the nav squeezes into a strip and the rest
+   of the drawer sits empty. Give the drawer `width: auto; min-width: 0`
+   and put `autosize` on the `mat-sidenav-container` so
+   `mat-sidenav-content` re-measures its margin. Without `autosize` the
+   container only re-measures on open/close, mode change, or a viewport
+   ruler event, so a width changing underneath it latches a stale margin.
+
+   Until you have done this, pass `[collapsible]="false"` — otherwise the
+   toggle renders and misbehaves when a rider clicks it.
+
+2. **Don't auto-collapse an overlay drawer.** `autoCollapseBelow` defaults
+   to `0` (off) and should stay off wherever the drawer is in `over` mode:
+   an overlay floats above the content and isn't competing for horizontal
+   space, so opening it as an icon strip costs the rider labels for no
+   gain. If your layout switches to `over` below some width, gate the
+   breakpoint on that same signal rather than passing a constant:
+
+   ```html
+   <assay-rail [autoCollapseBelow]="isMobile() ? 0 : 1280" …>
+   ```
+
+Give labeled groups an `icon` before enabling any of this — collapsed, a
+labeled group shows one icon for the whole category, and without `icon` it
+falls back to the group's *first item's* icon, which reads as that
+destination rather than the category. If your service maps its own nav
+config into `AssayNavGroup` objects, check that the mapping actually
+forwards `icon`: a field-by-field rebuild drops it silently, and the icons
+you added will have no effect with nothing to indicate why.
+
 ## What's deliberately NOT in the library
 
 - **No fabricated navigation destinations.** The rail and account menu
