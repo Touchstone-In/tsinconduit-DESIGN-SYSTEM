@@ -8,7 +8,7 @@ toolkit those components render against.
 Installed as a git dependency pinned to a release branch:
 
 ```json
-"assay-ui": "git+https://github.com/Touchstone-In/tsinconduit-design-system.git#assay-ui-v0.3.2"
+"assay-ui": "git+https://github.com/Touchstone-In/tsinconduit-design-system.git#assay-ui-v0.3.5"
 ```
 
 After installing, patch `package-lock.json`'s `resolved` URL for `assay-ui`
@@ -31,6 +31,20 @@ Add both stylesheets to `angular.json`'s `styles` array, tokens first:
 `tokens.css` defines the palette, type scale, spacing and motion custom
 properties, and bundles the fonts. `toolkit.css` supplies the `a-` prefixed
 classes the library's templates render.
+
+**`toolkit.css` never paints your `<body>`.** It does not set a page
+background, text color, or default link color on the raw `body`/`a`
+elements -- that used to be a bare, unscoped rule, and it silently beat
+every host's own page-chrome styling under `angular.json`'s standard style
+order (assay-ui's stylesheets load last, and a same-specificity tie in CSS
+goes to whichever rule was declared last). It went unnoticed in most
+services because their own light-mode canvas color happened to be close to
+assay-ui's; dark mode is what exposed it, since the two palettes only ever
+matched by coincidence. Your service already has its own page background
+and text color -- keep using it. `toolkit.css` ships a `.a-canvas` class with
+the old body-reset behavior for the rare case of a standalone page with no
+host styling of its own (this repo's own `design/mockups/*.html`, for
+instance); a real Conduit service should not add it.
 
 ## Components
 
