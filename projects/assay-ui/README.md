@@ -98,9 +98,19 @@ it in.** Three host preconditions, none of which produce a build error:
 `width: var(--a-rail-width)` leaves the rail shrinking to 72px inside a drawer
 that stays at 248px — the nav squeezes into a strip and the rest of the drawer
 sits empty. Use `width: auto; min-width: 0`, and put `autosize` on the
-`mat-sidenav-container` so `mat-sidenav-content` re-measures its margin; without
-it the container re-measures only on open/close, mode change, or a viewport
-ruler event, and latches a stale margin.
+`mat-sidenav-container`.
+
+`autosize`'s own `ResizeObserver`-based remeasure does not reliably catch the
+rail's own CSS-transitioned width change — this held true across five Conduit
+services, zoneless and zone.js apps alike, so it isn't a change-detection gap
+to work around on your end. As of v0.3.6, `assay-rail` compensates for this
+itself: after every collapse/expand, once next frame and again after
+`--a-motion-standard` has had time to finish, it dispatches a `resize` event
+—one of the small set of triggers (open/close, mode change, a viewport ruler
+event) `mat-sidenav-container` reliably remeasures on. You should not need to
+do anything extra for this; if you still see a stale content margin after a
+collapse/expand or a live resize on v0.3.6+, that's a bug in the library, not
+a missing host-side workaround.
 
 Until you have done this, pass `[collapsible]="false"` — otherwise the toggle
 renders and misbehaves when a rider clicks it.

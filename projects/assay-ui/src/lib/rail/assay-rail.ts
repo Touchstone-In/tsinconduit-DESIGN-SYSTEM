@@ -235,10 +235,10 @@ export class AssayRailComponent {
    * drawer with a hard-coded `width: var(--a-rail-width)` — switching this on without also
    * letting that drawer size to content leaves a 72px rail inside a 248px drawer. Set it to a
    * breakpoint (1280 is the Assay reference value) only once the host drawer follows the rail:
-   * `width: auto` on the drawer, or resize it from `(collapsedChange)`. Note that
-   * `mat-sidenav-container` re-measures its content margins only on open/close, mode change,
-   * viewport-ruler change, or with `[autosize]`, so a width that changes underneath it can
-   * latch a stale margin. The manual toggle works regardless of this setting.
+   * `width: auto` on the drawer, or resize it from `(collapsedChange)`. The manual toggle works
+   * regardless of this setting. (A `mat-sidenav-container[autosize]` host's own remeasure of its
+   * content margin doesn't reliably follow this rail's width on its own — see the constructor's
+   * `resize`-dispatch effect below, which compensates for that.)
    */
   readonly autoCollapseBelow = input(0);
   /** Fires on every item click — hosts typically use this to close a mobile drawer. */
@@ -271,7 +271,15 @@ export class AssayRailComponent {
   constructor() {
     effect((onCleanup) => {
       const breakpoint = this.autoCollapseBelow();
-      if (!breakpoint || typeof window === 'undefined' || !window.matchMedia) return;
+      if (!breakpoint || typeof window === 'undefined' || !window.matchMedia) {
+        // Auto-collapse just turned off (e.g. a host switching to `0` for handset, where an
+        // overlay drawer shouldn't reduce to icons). Without this, a `viewportNarrow` left
+        // `true` from the previous breakpoint keeps forcing the rail collapsed even though
+        // nothing is driving it anymore — `collapsed()` falls back to it once
+        // `manuallyCollapsed()` is null, which it is here.
+        this.viewportNarrow.set(false);
+        return;
+      }
 
       const query = window.matchMedia(`(max-width: ${breakpoint - 1}px)`);
       const apply = (matches: boolean) => {
@@ -290,6 +298,26 @@ export class AssayRailComponent {
       const next = this.collapsed();
       if (previous !== null && previous !== next) this.collapsedChange.emit(next);
       previous = next;
+    });
+
+    // A host's `mat-sidenav-container[autosize]` (or equivalent) only re-measures its content
+    // margin on a handful of specific triggers — open/close, mode change, or a `ViewportRuler`
+    // change — none of which our own width transition fires by itself. Left alone, the
+    // container's cached margin goes stale the moment this rail's width changes: a dead gutter
+    // after collapsing, or content rendered underneath the rail after expanding again. This
+    // reproduces identically whether or not the host runs zoneless change detection, so it
+    // isn't a zone timing gap — `ResizeObserver`-based autosize just doesn't reliably catch a
+    // CSS-transitioned width. Dispatching a `resize` event is what `ViewportRuler` listens for,
+    // and is a documented, real remeasure trigger rather than a workaround bolted on from
+    // outside. Fired twice: once next frame, for a width that's already applied by the time this
+    // runs (a fresh render in a collapsed state has no transition to wait for), and once after
+    // `--a-motion-standard` (200ms) has had time to finish, for a width that animates there.
+    effect(() => {
+      this.collapsed();
+      if (typeof window === 'undefined') return;
+      const nudge = () => window.dispatchEvent(new Event('resize'));
+      requestAnimationFrame(nudge);
+      setTimeout(nudge, 250);
     });
   }
 
