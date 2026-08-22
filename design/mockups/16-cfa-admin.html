@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CFA — Admin dashboard</title>
+<link rel="stylesheet" href="../../projects/assay-ui/styles/tokens.css">
+<link rel="stylesheet" href="../../projects/assay-ui/styles/toolkit.css">
+<style>
+  .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--a-gutter); }
+  .stat { }
+  .stat__value { font: var(--a-type-display); color: var(--a-ink); font-variant-numeric: tabular-nums; }
+  .stat__label { font: var(--a-type-caption); color: var(--a-ink-muted); margin-top: 4px; }
+  .stat__delta { font: var(--a-type-caption); font-weight: 600; margin-top: 8px; display: inline-flex; align-items: center; gap: 2px; }
+  .stat__delta--up { color: var(--a-success); }
+  .stat__delta--warn { color: var(--a-warning); }
+</style>
+<script src="shell.js"></script>
+</head>
+<body class="a-shell">
+<script>
+renderShell({
+  service: 'CFA',
+  pageContext: 'Dashboard',
+  searchScope: 'CFA',
+  user: { name: 'Priya Nathan', role: 'Program Coordinator', initials: 'PN' },
+  nav: [
+    { section: 'Overview' },
+    { icon: 'dashboard', label: 'Dashboard', active: true },
+    { icon: 'monitoring', label: 'Reports' },
+    { section: 'Recruitment' },
+    { icon: 'account_tree', label: 'Site pipeline' },
+    { icon: 'domain', label: 'Sites' },
+    { icon: 'task_alt', label: 'Follow-ups', badge: '12' },
+    { icon: 'handshake', label: 'Relationships' },
+    { icon: 'campaign', label: 'Campaigns' },
+    { section: 'Assessor intake' },
+    { icon: 'assignment_ind', label: 'Expressions of interest', badge: '5' },
+    { icon: 'record_voice_over', label: 'Interviews' },
+    { icon: 'school', label: 'Training' },
+    { section: 'Agreements' },
+    { icon: 'contract', label: 'Contracts' },
+    { icon: 'gavel', label: 'PRA agreements' },
+    { section: 'Delivery' },
+    { icon: 'groups', label: 'Cohorts' },
+  ],
+});
+</script>
+
+<main class="a-main"><div class="a-main__inner">
+
+  <div class="a-page-head">
+    <div class="a-page-head__row">
+      <div>
+        <h1 class="a-title">Good morning, Priya</h1>
+        <p class="a-page-head__sub">Clinical Field Assessment — program overview</p>
+      </div>
+      <div class="a-page-head__actions">
+        <button class="a-btn a-btn--outlined"><span class="a-icon">domain</span>Add site</button>
+        <button class="a-btn a-btn--filled"><span class="a-icon">assignment_ind</span>Review EOIs</button>
+      </div>
+    </div>
+    <span class="a-current-bar"></span>
+  </div>
+
+  <div class="stat-grid a-mb-5">
+    <div class="a-card stat">
+      <div class="stat__label">Expressions of interest</div>
+      <div class="stat__value">28</div>
+      <div class="stat__delta stat__delta--up"><span class="a-icon a-icon--xs">arrow_upward</span>6 this week</div>
+    </div>
+    <div class="a-card stat">
+      <div class="stat__label">Active assessors</div>
+      <div class="stat__value">142</div>
+      <div class="stat__delta stat__delta--up"><span class="a-icon a-icon--xs">arrow_upward</span>3 onboarded</div>
+    </div>
+    <div class="a-card stat">
+      <div class="stat__label">Overdue follow-ups</div>
+      <div class="stat__value">12</div>
+      <div class="stat__delta stat__delta--warn"><span class="a-icon a-icon--xs">warning</span>Needs attention</div>
+    </div>
+    <div class="a-card stat">
+      <div class="stat__label">Sites in pipeline</div>
+      <div class="stat__value">37</div>
+      <div class="stat__delta"><span class="a-caption" style="color:var(--a-ink-muted)">9 eligible</span></div>
+    </div>
+  </div>
+
+  <div class="a-grid a-grid--main-side">
+    <div class="a-stack" style="gap:var(--a-gutter)">
+      <section class="a-card">
+        <div class="a-card__head">
+          <h2 class="a-heading">Expressions of interest awaiting review</h2>
+          <a href="#" class="a-btn a-btn--ghost a-btn--sm">View all</a>
+        </div>
+        <div class="a-list">
+          <div class="a-list__row">
+            <span class="a-list__glyph"><span class="a-icon">person</span></span>
+            <span class="a-list__body"><span class="a-list__title">Dr. Aisha Karim</span><br>
+              <span class="a-list__meta">Internal medicine · Ottawa · submitted 2 hours ago</span></span>
+            <span class="a-badge a-badge--warning">Needs review</span>
+          </div>
+          <div class="a-list__row">
+            <span class="a-list__glyph"><span class="a-icon">person</span></span>
+            <span class="a-list__body"><span class="a-list__title">Dr. Marcus Chen</span><br>
+              <span class="a-list__meta">Family medicine · Mississauga · submitted yesterday</span></span>
+            <span class="a-badge a-badge--warning">Needs review</span>
+          </div>
+          <div class="a-list__row">
+            <span class="a-list__glyph"><span class="a-icon">person</span></span>
+            <span class="a-list__body"><span class="a-list__title">Dr. Grace Okafor</span><br>
+              <span class="a-list__meta">Pediatrics · London · submitted 2 days ago</span></span>
+            <span class="a-badge a-badge--info">Interview scheduled</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="a-card">
+        <div class="a-card__head">
+          <h2 class="a-heading">Recruitment pipeline by stage</h2>
+          <span class="a-chip a-chip--selected">This quarter</span>
+        </div>
+        <div class="a-grid a-grid--4">
+          <div class="band" style="text-align:center;padding:var(--space-4);border-radius:var(--a-radius-input);background:var(--a-surface-sunken)">
+            <div class="stat__value" style="font-size:1.5rem">14</div><div class="a-caption">Prospecting</div>
+          </div>
+          <div class="band" style="text-align:center;padding:var(--space-4);border-radius:var(--a-radius-input);background:var(--a-surface-sunken)">
+            <div class="stat__value" style="font-size:1.5rem">9</div><div class="a-caption">Eligibility review</div>
+          </div>
+          <div class="band" style="text-align:center;padding:var(--space-4);border-radius:var(--a-radius-input);background:var(--a-surface-sunken)">
+            <div class="stat__value" style="font-size:1.5rem">8</div><div class="a-caption">Qualified</div>
+          </div>
+          <div class="band" style="text-align:center;padding:var(--space-4);border-radius:var(--a-radius-input);background:var(--a-surface-sunken)">
+            <div class="stat__value" style="font-size:1.5rem">6</div><div class="a-caption">Agreement sent</div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="a-stack" style="gap:var(--a-gutter)">
+      <section class="a-card">
+        <h2 class="a-subhead a-mb-4">Follow-ups due today</h2>
+        <div class="a-stack">
+          <div class="a-row" style="gap:10px"><span class="a-icon a-icon--sm" style="color:var(--a-error)">warning</span><span class="a-body-sm">Riverside Family Clinic — 3 days overdue</span></div>
+          <div class="a-row" style="gap:10px"><span class="a-icon a-icon--sm" style="color:var(--a-warning)">schedule</span><span class="a-body-sm">Northgate Medical — due today</span></div>
+          <div class="a-row" style="gap:10px"><span class="a-icon a-icon--sm" style="color:var(--a-warning)">schedule</span><span class="a-body-sm">Dr. Chen's practice — due today</span></div>
+        </div>
+        <button class="a-btn a-btn--outlined a-mt-4" style="width:100%">View follow-up queue</button>
+      </section>
+
+      <section class="a-card">
+        <h2 class="a-subhead a-mb-4">Upcoming training</h2>
+        <div class="a-list">
+          <div class="a-list__row" style="padding:var(--space-3) var(--space-2)">
+            <span class="a-icon" style="color:var(--a-teal-action)">event</span>
+            <span class="a-list__body"><span class="a-list__title">General training · Sep 12</span><br><span class="a-list__meta">8 registered</span></span>
+          </div>
+          <div class="a-list__row" style="padding:var(--space-3) var(--space-2)">
+            <span class="a-icon" style="color:var(--a-teal-action)">event</span>
+            <span class="a-list__body"><span class="a-list__title">MCC training · Sep 19</span><br><span class="a-list__meta">5 registered</span></span>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+</div>
+<script>renderFooter()</script>
+</main>
+</body>
+</html>

@@ -166,7 +166,7 @@ meaning-by-icon-alone.
 
 ## 4. The unified shell
 
-The heart of the "login → service → logout" continuity. All fourteen
+The heart of the "login → service → logout" continuity. All fifteen
 services render this exact structure:
 
 ```
@@ -254,15 +254,17 @@ components: load the two CSS files, then map M3 system tokens to Assay
 tokens (`--mat-sys-primary: var(--a-teal)`, surfaces, outlines, error,
 typography to IBM Plex Sans, `--mdc-outlined-text-field-container-shape:
 var(--a-radius-input)`, and so on). The SSO frontend already demonstrates
-this token-override pattern; the shared file gives all fourteen services
+this token-override pattern; the shared file gives all fifteen services
 the same values from one place.
 
 ---
 
 ## 6. The suite, screen by screen
 
-Fourteen sample screens, one per service, all built purely from the
-toolkit above. Every screenshot below is generated from the HTML in
+Sixteen sample screens covering fifteen services, all built purely from
+the toolkit above. One per service, except CFA, which gets two because
+its public landing page and its authenticated admin shell are different
+enough to be worth pinning separately. Every screenshot below is generated from the HTML in
 [`mockups/`](mockups/) by [`tools/screenshot.mjs`](tools/screenshot.mjs)
 — the mockups are living proof that the toolkit covers real product
 surfaces, not just a style board.
@@ -387,6 +389,24 @@ application status, and credential/training status that links back into
 Campus — the suite referring to itself.
 
 ![Work With Us](screenshots/14-wwus.png)
+
+### 6.15 CFA — public landing
+
+The suite's first unauthenticated marketing surface. No rail, no search
+and no account menu — a plain public nav instead — with the hero reusing
+the SSO login panel's navy and Current gradient so an anonymous visitor
+still reads it as Conduit. Feature cards and a closing CTA band carry the
+two audiences to the expression-of-interest wizard or to admin sign-in.
+
+![CFA landing](screenshots/15-cfa-landing.png)
+
+### 6.16 CFA — admin dashboard
+
+The authenticated side of the same service: the standard shell, a
+program-overview page head, stat cards for the intake funnel, an EOI
+review queue and a recruitment pipeline broken down by stage.
+
+![CFA admin](screenshots/16-cfa-admin.png)
 
 ---
 
