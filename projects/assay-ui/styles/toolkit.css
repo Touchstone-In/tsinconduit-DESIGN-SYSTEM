@@ -14,7 +14,22 @@
 
 html { font-size: 16px; -webkit-text-size-adjust: 100%; }
 
-body {
+/* Deliberately NOT bare `body`/`a` selectors. Every real Conduit service already owns its own
+   page background, text color, and link color -- its own tokens, its own light/dark mechanism,
+   frequently under different names than assay-ui's (`--surface-page` vs `--a-bg`) even where the
+   values start out coincidentally close. A toolkit that repaints <body> unconditionally will
+   collide with whatever the host already does, invisibly: same specificity as the host's own
+   rule, so this is a plain source-order tie, and every Conduit service's angular.json lists
+   assay-ui's stylesheets after the host's own -- assay-ui always won. In light mode the
+   collision is usually invisible (most hosts pick a similarly pale canvas); dark mode is what
+   exposed it, in three separate services, because each host's OWN dark palette never got a
+   chance to apply to <body> at all -- assay-ui's `prefers-color-scheme` dark values applied
+   instead, decoupled from however that host actually toggles dark mode.
+   Opt in explicitly with `.a-canvas` on <body> rather than claiming every consumer's <body> --
+   this repo's own design/mockups/*.html use it, since a standalone mockup has no host app to
+   paint it. A real Conduit service should never add this class; it already has its own answer
+   for page-level background/text/link color, and should keep it. */
+.a-canvas {
   font: var(--a-type-body);
   color: var(--a-ink-body);
   background: var(--a-bg);
@@ -23,8 +38,14 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-a { color: var(--a-teal); text-decoration: none; }
-a:hover { text-decoration: underline; }
+/* Scoped under .a-canvas for the same reason the body reset above is: every actual assay-ui
+   component (.a-rail__item, .a-account-menu__item, ...) sets its own color and text-decoration
+   at class specificity, so this bare-element fallback only ever mattered for generic prose
+   links -- and a bare `a{}` selector claims those from the host's own link color exactly like
+   the old bare `body{}` claimed the page background, with the same "assay-ui loads last, wins
+   the tie" mechanism. */
+.a-canvas a { color: var(--a-teal); text-decoration: none; }
+.a-canvas a:hover { text-decoration: underline; }
 
 :focus-visible {
   outline: 2px solid var(--a-border-focus);
