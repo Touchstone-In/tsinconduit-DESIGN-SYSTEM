@@ -106,6 +106,12 @@ a:hover { text-decoration: underline; }
   overflow: hidden;
 }
 
+/* Shell variant for a reduced rail. Apps driving the rail through their own drawer can skip
+   this and react to (collapsedChange) instead. */
+.a-shell--rail-collapsed {
+  grid-template-columns: var(--a-rail-collapsed) 1fr;
+}
+
 .a-main {
   grid-area: main;
   overflow-y: auto;
@@ -171,6 +177,85 @@ a:hover { text-decoration: underline; }
   padding: var(--space-4) var(--space-3) var(--space-1);
 }
 
+/* Accordion section header — a labeled group with more than one item (AssayRailComponent
+   decides which). Same type treatment as the plain .a-rail__section label, just interactive. */
+.a-rail__section--toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+  border-radius: var(--a-radius-input);
+  transition: color var(--a-motion-fast);
+}
+.a-rail__section--toggle:hover,
+.a-rail__section--toggle[aria-expanded='true'] {
+  color: var(--a-rail-ink-hi);
+}
+/* An expanded group takes on its own tone, and its header rounds only at the top so header
+   and body read as one continuous panel rather than two stacked blocks. */
+.a-rail__section--toggle[aria-expanded='true'] {
+  background: var(--a-rail-group-open);
+  border-radius: var(--a-radius-input) var(--a-radius-input) 0 0;
+  padding-bottom: var(--space-2);
+  /* Cancels the rail's flex gap so no navy seam splits the header from its panel. */
+  margin-bottom: calc(-1 * var(--space-2));
+}
+.a-rail__section--toggle:focus-visible {
+  outline: 2px solid var(--a-teal);
+  outline-offset: 1px;
+}
+
+.a-rail__section-chevron {
+  font-size: 18px !important;
+  flex: none;
+  transition: transform var(--a-motion-standard);
+}
+.a-rail__section--toggle[aria-expanded='true'] .a-rail__section-chevron {
+  transform: rotate(180deg);
+}
+
+/* Collapsible group body — a CSS-only expand/collapse via the grid-rows 0fr/1fr trick (no JS
+   height measurement needed). .a-rail__group-inner supplies the overflow:hidden that clips
+   the row during the transition; its own children keep the item gap consistent with a flat
+   (non-accordion) group's items. */
+.a-rail__group {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--a-motion-standard);
+}
+/* The panel tone lives on the grid container, not on .a-rail__group-inner: the inner element is
+   pinned to a 0fr row when closed, but its padding would still paint a sliver of background
+   under every collapsed header. The container simply has no tone until it opens. */
+.a-rail__group.is-open {
+  grid-template-rows: 1fr;
+  background: var(--a-rail-group-open);
+  border-radius: 0 0 var(--a-radius-input) var(--a-radius-input);
+  padding: 0 var(--space-2) var(--space-2);
+}
+.a-rail__group-inner {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.a-rail__group-inner > .a-rail__item {
+  margin-top: var(--space-2);
+}
+.a-rail__group-inner > .a-rail__item:first-child {
+  margin-top: var(--space-1);
+}
+/* Inside the panel the item's Current slice sits flush to the panel's own edge — at the
+   flat-rail offset it would fall outside .a-rail__group-inner and be clipped by its
+   overflow:hidden, silently losing the active indicator within accordion groups. */
+.a-rail__group-inner > .a-rail__item[aria-current='page']::before {
+  left: 0;
+}
+
 .a-rail__item {
   display: flex;
   align-items: center;
@@ -213,6 +298,79 @@ a:hover { text-decoration: underline; }
   border-radius: var(--a-radius-pill);
   padding: 1px 8px;
 }
+
+/* ── Collapsed (icon-only) rail ───────────────────────────────────────────────
+   AssayRailComponent reduces to this below its auto-collapse breakpoint, or on the rider's
+   toggle. It swaps what it renders — one icon per labeled category, or the items' own icons
+   where a group has no label — so these rules only handle the narrowed geometry. */
+.a-rail--collapsed {
+  padding-left: var(--space-2);
+  padding-right: var(--space-2);
+  align-items: center;
+  overflow-x: hidden;
+}
+.a-rail--collapsed .a-rail__brand {
+  justify-content: center;
+  padding: var(--space-2) 0 var(--space-3);
+}
+
+/* Square icon target, sized so the 72px rail keeps an even margin either side. */
+.a-rail__item--icon {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  gap: 0;
+  justify-content: center;
+  flex: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font: inherit;
+}
+.a-rail__item--icon.is-current {
+  background: var(--a-rail-active);
+  color: var(--a-rail-ink-hi);
+}
+.a-rail__item--icon:focus-visible {
+  outline: 2px solid var(--a-teal);
+  outline-offset: 1px;
+}
+/* A collapsed item has no room for a count, so the badge degrades to a corner dot. */
+.a-rail__badge--dot {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  margin: 0;
+  padding: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+/* Rail collapse/expand toggle — trailing the brand when open, on its own centered row when
+   collapsed (72px leaves no room for it beside the mark). */
+.a-rail__collapse {
+  margin-left: auto;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  flex: none;
+  border: none;
+  background: none;
+  border-radius: var(--a-radius-input);
+  color: var(--a-rail-ink);
+  cursor: pointer;
+  transition: background-color var(--a-motion-fast), color var(--a-motion-fast);
+}
+.a-rail__collapse:hover { background: var(--a-rail-hover); color: var(--a-rail-ink-hi); }
+.a-rail__collapse:focus-visible { outline: 2px solid var(--a-teal); outline-offset: 1px; }
+.a-rail__collapse .a-icon { font-size: 20px; }
+.a-rail__collapse--solo {
+  margin: 0 0 var(--space-2);
+}
+
+.a-rail--collapsed .a-rail__footer-slot { display: none; }
 
 .a-rail__spacer { flex: 1; }
 

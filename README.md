@@ -68,6 +68,31 @@ credentials are needed to fetch it):
 > pinned hash in `bun.lock` from an earlier state, unrelated to this —
 > just delete `bun.lock` and reinstall to regenerate it.)
 
+> **Second gotcha, specific to *bumping* the version: npm does not
+> re-resolve a git dependency when only the ref changes.** Edit
+> `package.json` from `#assay-ui-v0.2.0` to `#assay-ui-v0.3.0`, run a plain
+> `npm install`, and npm will update the lockfile's requested spec string
+> while leaving `"resolved"` pinned to the *old* commit — so the build
+> silently keeps compiling against the previous version, and everything
+> looks green. Delete the lockfile entry first to force re-resolution:
+>
+> ```bash
+> node -e '
+>   const fs = require("fs");
+>   const p = "package-lock.json";
+>   const data = JSON.parse(fs.readFileSync(p, "utf8"));
+>   delete data.packages["node_modules/assay-ui"];
+>   fs.writeFileSync(p, JSON.stringify(data, null, 2) + "\n");
+> '
+> npm install          # re-resolves to the new branch tip
+> # then apply the ssh -> https patch above, and verify:
+> cat node_modules/assay-ui/package.json | grep '"version"'
+> ```
+>
+> Always confirm the installed `version` matches the ref you asked for, and
+> that the lockfile's `resolved` commit SHA actually changed. A green build
+> alone does not prove the bump landed.
+
 Then wire the CSS toolkit into `angular.json`'s `styles` array, after
 your own service's stylesheet (loading order matters — Assay's classes
 are uniquely prefixed `a-*` and its custom properties `--a-*`, so it
@@ -92,15 +117,56 @@ import { AssayRailComponent, AssayTopbarComponent, AssayFooterComponent } from '
 See `projects/assay-ui/README.md` for the full component API (inputs,
 outputs, content-projection slots) and usage examples.
 
+## Adopting the collapsible rail
+
+`assay-rail` can reduce to an icon-only strip (`var(--a-rail-collapsed)`,
+72px). **The rail sizes its own host element** — it cannot resize the
+drawer you wrapped it in. Two host preconditions, both easy to miss
+because neither produces a build error:
+
+1. **The drawer must size to content.** Most Conduit services pin
+   `width: var(--a-rail-width)` (some also `min-width`) on their
+   `mat-sidenav`. With that in place the rail shrinks to 72px inside a
+   drawer that stays at 248px — the nav squeezes into a strip and the rest
+   of the drawer sits empty. Give the drawer `width: auto; min-width: 0`
+   and put `autosize` on the `mat-sidenav-container` so
+   `mat-sidenav-content` re-measures its margin. Without `autosize` the
+   container only re-measures on open/close, mode change, or a viewport
+   ruler event, so a width changing underneath it latches a stale margin.
+
+   Until you have done this, pass `[collapsible]="false"` — otherwise the
+   toggle renders and misbehaves when a rider clicks it.
+
+2. **Don't auto-collapse an overlay drawer.** `autoCollapseBelow` defaults
+   to `0` (off) and should stay off wherever the drawer is in `over` mode:
+   an overlay floats above the content and isn't competing for horizontal
+   space, so opening it as an icon strip costs the rider labels for no
+   gain. If your layout switches to `over` below some width, gate the
+   breakpoint on that same signal rather than passing a constant:
+
+   ```html
+   <assay-rail [autoCollapseBelow]="isMobile() ? 0 : 1280" …>
+   ```
+
+Give labeled groups an `icon` before enabling any of this — collapsed, a
+labeled group shows one icon for the whole category, and without `icon` it
+falls back to the group's *first item's* icon, which reads as that
+destination rather than the category. If your service maps its own nav
+config into `AssayNavGroup` objects, check that the mapping actually
+forwards `icon`: a field-by-field rebuild drops it silently, and the icons
+you added will have no effect with nothing to indicate why.
+
 ## What's deliberately NOT in the library
 
 - **No fabricated navigation destinations.** The rail and account menu
   accept only the nav items / menu items you pass in. Neither invents
   "Settings" or "My profile" links — if your service doesn't have a
   real route for something, don't pass it.
-- **No collapsible nav-group behaviour.** No Assay reference mockup has
-  one; the rail renders flat sections and flat items. If a service's
-  nav is very deep, split it into more sections rather than nesting.
+- **No nesting below one level.** A labeled group collapses into an
+  accordion section and the rail reduces to icons on narrow viewports
+  (see `assay-rail`), but groups hold items, and items hold nothing. If a
+  service's nav is deeper than that, split it into more groups rather
+  than nesting further.
 - **No opinion on how you compose the shell.** `assay-rail` and
   `assay-topbar` are independent components — wire them into your own
   `mat-sidenav-container` (or plain flex layout, if your service doesn't

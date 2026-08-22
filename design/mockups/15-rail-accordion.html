@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Assay — Accordion rail</title>
+<link rel="stylesheet" href="../../projects/assay-ui/styles/tokens.css">
+<link rel="stylesheet" href="../../projects/assay-ui/styles/toolkit.css">
+<style>
+  .callout { max-width: 640px; }
+  .callout .a-current-bar { margin-bottom: var(--space-4); }
+  .callout p { margin-top: var(--space-3); color: var(--a-ink-muted); }
+  .callout code { font: var(--a-type-caption); background: var(--a-surface-sunken); padding: 2px 6px; border-radius: 4px; }
+</style>
+<script src="shell.js"></script>
+</head>
+<body class="a-shell">
+<script>
+renderShell({
+  service: 'PRO',
+  pageContext: 'Management console',
+  searchScope: 'PRO Administration',
+  user: { name: 'Adaeze Reyes', role: 'Program Administrator', initials: 'AR' },
+  nav: [
+    { icon: 'dashboard', label: 'Overview' },
+    {
+      group: 'Applications',
+      icon: 'inbox',
+      expanded: true,
+      items: [
+        { icon: 'folder_shared', label: 'Application Management', active: true },
+        { icon: 'edit_document', label: 'Verify Documents' },
+        { icon: 'search', label: 'Review Submitted Applications' },
+      ],
+    },
+    {
+      group: 'MMI',
+      icon: 'videocam',
+      expanded: false,
+      items: [
+        { icon: 'videocam', label: 'Multiple Mini Interview' },
+        { icon: 'admin_panel_settings', label: 'MMI Administration' },
+      ],
+    },
+    {
+      group: 'Screening & KYE',
+      icon: 'policy',
+      expanded: false,
+      items: [
+        { icon: 'checklist', label: 'Screener Queue' },
+        { icon: 'apartment', label: 'WDOMS School Lookup' },
+        { icon: 'ink_eraser', label: 'PII Redaction (KYE)' },
+        { icon: 'send', label: 'Kye API Test Console' },
+      ],
+    },
+  ],
+});
+</script>
+
+<main class="a-main"><div class="a-main__inner">
+
+  <div class="a-page-head">
+    <div class="a-page-head__row">
+      <div>
+        <h1 class="a-title">Accordion nav groups</h1>
+        <p class="a-page-head__sub">A labeled rail group with more than one item now collapses behind a toggle</p>
+      </div>
+    </div>
+    <span class="a-current-bar"></span>
+  </div>
+
+  <div class="a-card callout">
+    <h2 class="a-heading">What changed</h2>
+    <p>
+      <code>&lt;assay-rail&gt;</code> groups with a <code>label</code> and more than one item render as a collapsible
+      section — a clickable header with a chevron, one group open at a time. The group containing the active route
+      auto-expands on load and on navigation; otherwise the rail remembers whichever group a rider last opened,
+      per service, in <code>localStorage</code>.
+    </p>
+    <p>
+      <strong>Applications</strong> is open above because it's this page's active section. Try the rail on the left:
+      click <strong>MMI</strong> or <strong>Screening &amp; KYE</strong> to open them — <strong>Applications</strong>
+      will close, since only one group stays open at a time.
+    </p>
+    <p>
+      The open group carries its own tone — <code>--a-rail-group-open</code>, the rail navy pulled 16% toward brand
+      teal — so header and items read as one panel rather than a brightness step. It sits deliberately between
+      <code>--a-rail</code> and <code>--a-rail-active</code>, leaving the active item's fill and Current slice
+      legible inside it.
+    </p>
+    <p>
+      A group with no <code>label</code>, or exactly one item, still renders flat — nothing to disclose there, so
+      no toggle chrome appears (see <strong>Overview</strong> above the accordion groups).
+    </p>
+  </div>
+
+</div></main>
+</body>
+</html>

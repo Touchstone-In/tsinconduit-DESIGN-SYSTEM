@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Assay — Collapsed rail (no categories)</title>
+<link rel="stylesheet" href="../../projects/assay-ui/styles/tokens.css">
+<link rel="stylesheet" href="../../projects/assay-ui/styles/toolkit.css">
+<style>
+  .callout { max-width: 660px; }
+  .callout .a-current-bar { margin-bottom: var(--space-4); }
+  .callout p { margin-top: var(--space-3); color: var(--a-ink-muted); }
+  .callout code { font: var(--a-type-caption); background: var(--a-surface-sunken); padding: 2px 6px; border-radius: 4px; }
+</style>
+<script src="shell.js"></script>
+</head>
+<body class="a-shell a-shell--rail-collapsed">
+<script>
+renderShell({
+  service: 'Connect',
+  railCollapsed: true,
+  pageContext: 'Sessions',
+  searchScope: 'sessions',
+  user: { name: 'Amara Osei', role: 'Program Operations', initials: 'AO' },
+  nav: [
+    { icon: 'dashboard', label: 'Dashboard', active: true },
+    { icon: 'videocam', label: 'Sessions' },
+    { icon: 'groups', label: 'Participants' },
+    { icon: 'folder', label: 'Recordings', badge: '3' },
+    { icon: 'assessment', label: 'Reports' },
+  ],
+});
+</script>
+
+<main class="a-main"><div class="a-main__inner">
+
+  <div class="a-page-head">
+    <div class="a-page-head__row">
+      <div>
+        <h1 class="a-title">Collapsed rail — no categories</h1>
+        <p class="a-page-head__sub">A flat nav keeps every destination, as its own icon</p>
+      </div>
+    </div>
+    <span class="a-current-bar"></span>
+  </div>
+
+  <div class="a-card callout">
+    <h2 class="a-heading">What you're looking at</h2>
+    <p>
+      Services with a short, flat nav — Connect, Payment, Secure Share — have no categories to stand in for, so
+      collapsing keeps <em>every</em> destination and shows each item's own icon. Nothing is hidden; only the labels
+      go. The active item keeps its fill and Current slice exactly as it does in the full rail.
+    </p>
+    <p>
+      A badge has no room for its count at 72px, so it degrades to a corner dot — see the folder icon
+      (<strong>Recordings</strong>). The count is still announced through the item's <code>aria-label</code>.
+    </p>
+    <p>
+      This is the same component and the same nav data as the full-width rail — the rail decides what to render from
+      whether its groups carry labels. Nothing in a consuming service changes to get this behaviour beyond giving
+      labeled groups an <code>icon</code>.
+    </p>
+  </div>
+
+</div></main>
+</body>
+</html>

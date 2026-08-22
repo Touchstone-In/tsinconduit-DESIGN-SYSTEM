@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Assay — Collapsed rail (categories)</title>
+<link rel="stylesheet" href="../../projects/assay-ui/styles/tokens.css">
+<link rel="stylesheet" href="../../projects/assay-ui/styles/toolkit.css">
+<style>
+  .callout { max-width: 660px; }
+  .callout .a-current-bar { margin-bottom: var(--space-4); }
+  .callout p { margin-top: var(--space-3); color: var(--a-ink-muted); }
+  .callout code { font: var(--a-type-caption); background: var(--a-surface-sunken); padding: 2px 6px; border-radius: 4px; }
+</style>
+<script src="shell.js"></script>
+</head>
+<body class="a-shell a-shell--rail-collapsed">
+<script>
+renderShell({
+  service: 'PRO',
+  railCollapsed: true,
+  pageContext: 'Management console',
+  searchScope: 'PRO Administration',
+  user: { name: 'Adaeze Reyes', role: 'Program Administrator', initials: 'AR' },
+  nav: [
+    { icon: 'dashboard', label: 'Overview' },
+    {
+      group: 'Applications',
+      icon: 'inbox',
+      expanded: true,
+      items: [
+        { icon: 'folder_shared', label: 'Application Management' },
+        { icon: 'edit_document', label: 'Verify Documents' },
+        { icon: 'search', label: 'Review Submitted Applications' },
+      ],
+    },
+    {
+      group: 'MMI',
+      icon: 'videocam',
+      items: [
+        { icon: 'videocam', label: 'Multiple Mini Interview' },
+        { icon: 'admin_panel_settings', label: 'MMI Administration' },
+      ],
+    },
+    {
+      group: 'Screening & KYE',
+      icon: 'policy',
+      items: [
+        { icon: 'checklist', label: 'Screener Queue' },
+        { icon: 'apartment', label: 'WDOMS School Lookup' },
+        { icon: 'ink_eraser', label: 'PII Redaction (KYE)' },
+        { icon: 'send', label: 'Kye API Test Console' },
+      ],
+    },
+  ],
+});
+</script>
+
+<main class="a-main"><div class="a-main__inner">
+
+  <div class="a-page-head">
+    <div class="a-page-head__row">
+      <div>
+        <h1 class="a-title">Collapsed rail — with categories</h1>
+        <p class="a-page-head__sub">One icon per category, standing in for the whole group</p>
+      </div>
+    </div>
+    <span class="a-current-bar"></span>
+  </div>
+
+  <div class="a-card callout">
+    <h2 class="a-heading">What you're looking at</h2>
+    <p>
+      The rail reduces to <code>--a-rail-collapsed</code> (72px). Because this nav has categories, each labeled
+      group collapses to a <em>single</em> icon representing the category — <strong>Applications</strong>,
+      <strong>MMI</strong>, <strong>Screening &amp; KYE</strong> — not one icon per destination. The category
+      owning the active route keeps the active fill, so you can still see where you are.
+    </p>
+    <p>
+      Each group supplies its own <code>icon</code>; a group without one falls back to its first item's icon, so
+      navs written before this existed still collapse to something meaningful. Every icon carries its label as a
+      <code>title</code> and <code>aria-label</code>, so the name is available on hover and to screen readers.
+    </p>
+    <p>
+      Clicking a category icon restores the full rail with that group open, rather than navigating somewhere
+      arbitrary — collapsed, the icon is the only handle onto the items underneath it.
+    </p>
+    <p>
+      The toggle under the brand mark always works. Unprompted reduction below a viewport width is opt-in:
+      <code>autoCollapseBelow</code> defaults to <code>0</code>, because the rail sizes its own host element and a
+      host drawer with a hard-coded <code>width</code> would not follow it — leaving a 72px rail inside a 248px
+      drawer. Give that drawer <code>width: auto</code> (or resize it from <code>collapsedChange</code>) and then set
+      <code>autoCollapseBelow</code> to a breakpoint; 1280 is the Assay reference value. Crossing it clears a manual
+      override, handing control back to the automatic behaviour.
+    </p>
+  </div>
+
+</div></main>
+</body>
+</html>
